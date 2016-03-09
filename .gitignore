@@ -1,0 +1,14 @@
+*.aux
+*.out
+*.log
+*.toc
+*.blg
+*.bat
+*.bbl
+*.snm
+*.nav
+
+admin
+distractions
+Davids-material.zip
+

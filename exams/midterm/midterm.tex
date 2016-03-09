@@ -1,0 +1,183 @@
+\documentclass[12pt]{article} 
+\input{../custom}
+
+
+\begin{document}
+\begin{center}
+\large\textbf{STA360/601 Midterm Exam}
+\end{center}
+
+\small
+
+\subsection*{Instructions}
+\begin{itemize}
+    \item Write your name, NetID, and signature below.
+    \item If you need extra space for any problem, continue on the back of the page.
+\end{itemize}
+
+\subsection*{Community Standard}
+To uphold the Duke Community Standard:
+\begin{itemize}
+\item I will not lie, cheat, or steal in my academic endeavors;
+\item I will conduct myself honorably in all my endeavors; and
+\item I will act if the Standard is compromised.
+\end{itemize}
+I have adhered to the Duke Community Standard in completing this exam.
+
+\vspace{1em}
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \item[] Name: \hrulefill
+    \item[] NetID: \hrulefill
+    \item[] Signature: \hrulefill
+\end{itemize}
+
+\subsection*{Score}
+(For TA use only --- leave this section blank.)
+
+\vspace{1em}
+%\begin{minipage}{1.0\textwidth}
+\begin{enumerate}
+    \setlength\itemsep{1em}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    %\item \line(1,0){100}
+        \vspace{1em}
+    \item[] Overall: \line(1,0){200}
+\end{enumerate}
+
+\newpage
+\subsection*{List of common distributions}
+% todo: any others?
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \item[] $\displaystyle \Geometric(x|\theta) = \theta(1-\theta)^x\,\I(x\in\{0,1,2,\ldots\})$ for $0<\theta<1$
+    \item[] $\displaystyle \Bernoulli(x|\theta) = \theta^x(1-\theta)^{1-x}\,\I(x\in\{0,1\})$ for $0<\theta<1$
+    \item[] $\displaystyle \Binomial(x|n,\theta) = {n\choose x}\theta^x(1-\theta)^{n-x}\,\I(x\in\{0,1,\ldots,n\})$ for $0<\theta<1$
+    \item[] $\displaystyle \Poisson(x|\theta) = \frac{e^{-\theta}\theta^x}{x!}\,\I(x\in\{0,1,2,\ldots\})$ for $\theta>0$
+    \item[] $\displaystyle \Exp(x|\theta) = \theta e^{-\theta x}\,\I(x>0)$ for $\theta>0$
+    \item[] $\displaystyle \Uniform(x|a,b) = \frac{1}{b-a}\,\I(a<x<b)$ for $a<b$
+    \item[] $\displaystyle \Ga(x|a,b) = \frac{b^a}{\Gamma(a)}x^{a-1}e^{-b x}\,\I(x>0)$ for $a,b>0$
+    \item[] $\displaystyle \Pareto(x|\alpha,c) = \frac{\alpha c^\alpha}{x^{\alpha+1}}\,\I(x>c)$ for $\alpha,c>0$
+    \item[] $\displaystyle \Beta(x|a,b) = \frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}\,\I(0<x<1)$ for $a,b>0$
+    \item[] $\displaystyle \N(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\big(-\tfrac{1}{2\sigma^2}(x-\mu)^2\big)$
+        for $\mu\in\R$, $\sigma^2>0$
+    \item[] $\displaystyle \N(x|\mu,\lambda^{-1}) = \sqrt{\frac{\lambda}{2\pi}}\exp\big(-\tfrac{1}{2}\lambda(x-\mu)^2\big)$
+        for $\mu\in\R$, $\lambda>0$
+\end{itemize}
+
+\subsection*{Exponential family form}
+$$ p(x|\theta) =\exp\big(\varphi(\theta)^\T t(x)-\kappa(\theta)\big) h(x) $$
+
+\subsection*{List of special functions}
+\label{special-functions}
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \item[] Beta function: $\displaystyle B(a,b) = \int_0^1 t^{a-1}(1-t)^{b-1} d t$ for $a,b>0$
+    \item[] Gamma function: $\displaystyle \Gamma(x) = \int_0^\infty t^{x-1} e^{-t} d t$ for $x>0$
+    \item[] Log function for $a>1$: $\displaystyle \log a = \int_1^a (1/t) d t$
+\end{itemize}
+
+
+\normalsize
+
+\newpage
+\begin{enumerate}
+\item (15 points)
+    \begin{enumerate}
+        \setlength\itemsep{4em}
+        \item (5 points) What is the formula for Bayes' theorem?
+        \item (5 points) You receive $x_i$ telephone calls on day $i$, for $i=1,\ldots,n$. 
+            You wish to model this as $X_1,\ldots,X_n$ i.i.d.\ from some distribution.
+            Which of the following distributions would make sense to use? (Circle one.)
+            \vspace{1em}
+            \begin{enumerate}
+                \setlength\itemsep{1em}
+                \item Beta
+                \item Poisson
+                \item Bernoulli
+                \item Exponential
+            \end{enumerate}
+        \item (5 points) Suppose $X,X_1,\ldots,X_N$ are i.i.d.\ and assume $\E|X|<\infty$ and $\V(X)<\infty$.
+            What is the standard deviation of $$\frac{1}{N}\sum_{i=1}^N X_i?$$
+            Hint: It is the same as the RMSE of the Monte Carlo approximation. (Circle one.)
+            \vspace{1em}
+            \begin{enumerate}
+                \setlength\itemsep{1em}
+                \item $\V(X)/N$
+                \item $\V(X)/\sqrt N$
+                \item $\sigma(X)/N$
+                \item $\sigma(X)/\sqrt N$
+            \end{enumerate}
+    \end{enumerate}
+
+\newpage
+\item (17 points) (Marginal likelihood)\\
+    Suppose $X_1,\ldots,X_n\iid\Geometric(\theta)$ given $\theta$. Consider a $\Beta(a,b)$ prior on $\theta$. What is the
+    marginal likelihood $p(x_{1:n})$?
+    
+    \vspace{1em}
+    (Your answer must be an explicit expression in terms of $a,b,x_1,\ldots,x_n,n$, and any of the special
+    functions on page \pageref{special-functions}. You must show your work to receive full credit.)
+
+\newpage
+\item (17 points) (Exponential families, Normal distribution)\\
+    Show that the collection of $\N(\mu,\sigma^2)$ distributions, with $\mu\in\R$ and $\sigma^2>0$, is a
+    two-parameter exponential family, and identify the sufficient statistics function $t(x)=(t_1(x),t_2(x))^\T$ for your parametrization.
+
+\newpage
+\item (17 points) (Conjugate priors)\\
+    Suppose $X_1,\ldots,X_n\iid\Uniform(0,\theta)$ given $\theta$, that is,
+    $$ p(x_i|\theta) = \frac{1}{\theta}\,\I(0<x_i<\theta). $$
+    You would like to find a conjugate prior for $\theta$.
+    Show that the family of $\Pareto(\alpha,c)$ distributions, with $\alpha>0$ and $c>0$, is a conjugate prior family.
+    
+\newpage
+\item (17 points) (Sampling methods)\\
+    Suppose $c>1$ and
+    $$ p(x) \propto \frac{1}{x}\,\I(1<x<c). $$
+    (Note that $p(x)$ is proportional to this, not equal to this.)
+    Assume you can generate $U\sim\Uniform(0,1)$.  Give an explicit formula, in terms of $c$ and $U$, for generating a sample from $p(x)$.  You must show your work to receive full credit.
+
+\newpage
+\item (17 points) (Decision theory)\\
+    Consider a decision problem in which the state is $\theta\in\R$, the observation is $x$, you must choose an action
+    $\hat\theta\in\R$, and the loss function is
+    $$\ell(\theta,\hat\theta) = a\theta^2 + b\theta\hat\theta + c\hat\theta^2$$
+    for some known $a,b,c\in\R$ with $c>0$.
+    Suppose you have computed the posterior distribution and it is $p(\theta|x) = \N(\theta|M,L^{-1})$ for some $M$ and $L$.
+    What is the Bayes procedure (minimizing posterior expected loss)?
+
+    \vspace{1em}
+    (Your answer must be an explicit expression in terms of $a,b,c,M$, and $L$. You must show your work to receive full credit.)
+
+
+
+% \newpage
+% \item (14 points) (Monte Carlo and Importance sampling)\\
+% Suppose $h(x) = x^2$.  Find the limit of each of the following expressions, as $N \to \infty$.
+% Each answer must be a specific numerical value (not just a formula), and you must show your work to receive full credit.
+    % \begin{enumerate}
+        % \setlength\itemsep{11em}
+        % \item (5 points) $\displaystyle\frac{1}{N}\sum_{i=1}^N h(X_i)$ where $X_1,X_2,\ldots\iid\Uniform(0,1)$.
+        % \item (5 points) $\displaystyle\frac{1}{N}\sum_{i=1}^N h(\Phi(Z_i))$ where $Z_1,Z_2,\ldots\iid\N(0,1)$
+            % and $\Phi(z)$ is the $\N(0,1)$ c.d.f.
+        % \item (4 points) $\displaystyle\frac{1}{N}\sum_{i=1}^N \frac{h(Z_i)}{\varphi(Z_i)}\I(0<Z_i<1)$ where $Z_1,Z_2,\ldots\iid\N(0,1)$
+            % and $\varphi(z)$ is the $\N(0,1)$ p.d.f.
+    % \end{enumerate}
+
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+

@@ -1,0 +1,164 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\input{../julia-listings}
+\graphicspath{{code/}}
+\def\showcommentary{1}
+
+
+\title{Chapter 5: Solutions to Exercises}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{firststyle}
+
+\subsection*{Exercise 1}
+
+To find the inverse of the c.d.f., set $u = F(x\mid c,\beta)$ and solve for $x$:
+\begin{align*}
+& u =\exp\Big(-e^{-(x-c)/\beta}\Big)\\
+&-\log u = e^{-(x-c)/\beta}\\
+&-\log(\log 1/u) = (x-c)/\beta\\
+&-\beta\log(\log 1/u)+ c = x.
+\end{align*}
+Thus, letting
+$$G(u) = -\beta\log(\log 1/u)+ c, $$
+we have that $G(U)\sim\Gumbel(c,\beta)$ if $U\sim\Uniform(0,1)$.
+
+
+\subsection*{Exercise 2}
+
+See Figure \ref{figure:cauchy}. See Appendix for source code. Roughly speaking, by inspecting the plots, the approximations seem to be failing to converge---they start approaching 0, but then get ``kicked out'' again.
+The issue is that every once in a while, a value of $X_i$ occurs that is so astronomically large compared to all previous values, that it significantly shifts the sample average. 
+
+\begin{figure}
+  \begin{center}
+    % \includegraphics[trim=0 0.6cm 0 0, clip, width=0.8\textwidth]{cauchy1.png}
+    \includegraphics[trim=0 0.6cm 0 0, clip, width=0.8\textwidth]{cauchy2.png}
+    \includegraphics[trim=0 0.6cm 0 0, clip, width=0.8\textwidth]{cauchy3.png}
+    \includegraphics[trim=0 0.6cm 0 0, clip, width=0.8\textwidth]{cauchy4.png}
+    \includegraphics[trim=0 0.6cm 0 0, clip, width=0.8\textwidth]{cauchy5.png}
+    % Source: Original work of J. W. Miller.
+  \end{center}
+  \caption{Lack of convergence of Monte Carlo approximations for Cauchy samples.}
+  \label{figure:cauchy}
+\end{figure}
+
+
+\subsection*{Exercise 3}
+
+\subsubsection*{Part (a)}
+First, note that, abbreviating $x = x_{1:n}$,
+\begin{align*}
+\E\Big(\frac{1}{p(x|\btheta)}\Big\vert x\Big) 
+& = \int \frac{1}{p(x|\theta)} p(\theta|x)d\theta\\
+& = \int \frac{1}{p(x|\theta)} \frac{p(x|\theta) p(\theta)}{p(x)}d\theta\\
+& = \frac{1}{p(x)}\int p(\theta) d\theta =\frac{1}{p(x)}
+\end{align*}
+by Bayes' theorem, and using that $p(x_{1:n}|\theta)>0$ for all $\theta$ to justify the cancellation.
+
+Since this is finite, then letting $\btheta_1,\dotsc,\btheta_N\iid p(\theta|x)$, we have
+$$\frac{1}{N}\sum_{i = 1}^N \frac{1}{p(x|\btheta_i)}\longrightarrow \E\Big(\frac{1}{p(x|\btheta)}\Big\vert x\Big)=\frac{1}{p(x)}$$
+as $N\to\infty$, with probability 1, by the law of large numbers. Therefore,
+$$\Big(\frac{1}{N}\sum_{i = 1}^N \frac{1}{p(x|\btheta_i)}\Big)^{-1}\longrightarrow p(x)$$
+as $N\to\infty$, with probability 1.
+
+\subsubsection*{Part (b)}
+See Appendix for source code. 
+Here are the values of the harmonic mean approximations for 5 independent sets of samples:
+\begin{center}
+\begin{tabular}{ccccc}
+0.109 &
+0.097 &
+0.106 &
+0.100 &
+0.094 
+\end{tabular}
+\end{center}
+% [0.10931980367161516,0.0972750607647146,0.10576431583257906,0.10027268715315128,
+% 0.0939995577650943]
+% 0.038917908100032615
+Based on these, we might expect the true value of the marginal likelihood to be somewhere between 0.08 and 0.12.
+However, the true value is actually
+$$\N(2\mid 0,\lambda^{-1}+\lambda_0^{-1}) = \N(2\mid 0, 1 + 10^2) = 0.0389.$$
+The harmonic mean approximations are quite far away from the true value.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{harmonic.png}
+    % Source: Original work of J. W. Miller.
+  \end{center}
+  \caption{Histogram of harmonic mean approximations, compared with the true value (dotted line).}
+  \label{figure:harmonic}
+\end{figure}
+
+Figure \ref{figure:harmonic} shows a histogram using 1000 independent sets of samples, compared with the true value. The vast majority of the time, the harmonic mean is considerably higher than the true value.
+
+
+\subsubsection*{Part (c)}
+Using $\lambda_0 = 1/100^2$, the harmonic mean gives us
+\begin{center}
+\begin{tabular}{ccccc}
+0.094 &
+0.109 &
+0.048 &
+0.095 &
+0.097 
+\end{tabular}
+\end{center}
+while the true value is 0.00399. The harmonic mean is now even more misleading.
+
+% [0.09429627655885037,0.10904854855724887,0.04852115611332322,0.09513155947282682
+% ,0.09656096443441156]
+% 0.0039884256627033335
+
+
+\subsection*{Exercise 4}
+See Appendix for source code. See module text for plot and discussion.
+
+
+\subsection*{Exercise 5}
+
+Let $S\subset A$. We have $Z\in S$ if and only if one of the following events occurs:
+\begin{align*}
+&\{X_1\in S\}\\
+&\{X_1\not\in A,X_2\in S\}\\
+&\{X_1\not\in A,X_2\not\in A,X_3\in S\}\\
+&\vdots
+\end{align*}
+and these events are mutually exclusive.  Hence, 
+\begin{align*}
+\Pr(Z\in S) & =\Pr(X_1\in S) +\Pr(X_1\not\in A,X_2\in S) +\Pr(X_1\not\in A,X_2\not\in A,X_3\in S)+\cdots\\
+& \overset{\text{(a)}}{=} \sum_{k = 1}^\infty \Big[\prod_{i = 1}^{k-1} \Pr(X_i\not\in A)\Big]\Pr(X_k\in S)\\
+& \overset{\text{(b)}}{=} \Pr(X\in S)\sum_{k = 0}^\infty \Pr(X\not\in A)^k\\
+& \overset{\text{(c)}}{=} \frac{\Pr(X\in S)}{1-\Pr(X\not\in A)}
+ = \frac{\Pr(X\in S)}{\Pr(X\in A)}
+ = \Pr(X\in S\mid X\in A)
+\end{align*}
+where (a) is by independence, (b) since the $X_i$'s are identically distributed, and (c) by the formula for the geometric series: $\sum_{k = 0}^\infty a^k = 1/(1-a)$ for $a\in[0,1)$.
+
+
+
+\appendix
+\section{Source code in Julia language}
+
+\subsection*{Exercise 2}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen},firstline=1]{code/cauchy.jl}
+
+\subsection*{Exercise 3}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen},firstline=1,lastline=32]{code/harmonic.jl}
+
+\subsection*{Exercise 4}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen},firstline=1]{code/gps-cut.jl}
+
+
+
+\end{document}
+
+
+
+
+
+

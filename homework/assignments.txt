@@ -1,0 +1,37 @@
+Homework 1
+Exercises 1 and 2 at the end of Chapter 1 (Foundations), in the section entitled "Gamma-Exponential model". 
+
+Homework 2
+Exercises 4, 5, 6, and 8, at the end of Chapter 1 (Foundations).
+
+Homework 3
+See attachment.
+
+Homework 4
+Exercises 1, 3, 4, 5, at the end of Chapter 4 (Univariate normal model). 
+
+Homework 5
+(A) Design an exercise on any of the material so far.  Give both the statement of the problem, and the solution.
+(B) Exercises 1, 2, 3, 5, at the end of Chapter 5 (Monte Carlo approximation).
+
+Homework 6
+Exercises 1 and 2 in Chapter 6 (Gibbs sampling), and Exercise 6.3 in the Hoff book (page 237). (Hoff's exercises are at the end of the book.)  In part (c) of 6.3, instead of using effective sample size to assess convergence, run your sampler multiple times with randomly-chosen initial values, and compare the resulting traceplots and running averages for beta and c; include representative plots from 3 runs once you decide how long to run the sampler.  You should still compute the autocorrelation function and discuss mixing.
+The dataset is here: http://www.stat.washington.edu/hoff/Book/Data/hwdata/divorce.dat 
+
+Homework 7
+Exercises 7.3 and 7.5 in the Hoff book (pages 239-240).  For exercise 7.5(c), the Jeffreys' prior is given in exercise 7.1.  Hoff's datasets are all here: http://www.stat.washington.edu/hoff/Book/Data/hwdata/
+
+Homework 8
+Exercise 8.3 in the Hoff book (page 242).  Instead of computing the effective sample size, run your sampler multiple times and compare the traceplots and running averages, in order to assess convergence of the Markov chain.  Note: Hoff uses "95% confidence interval" to mean 95% (Bayesian) credible interval.  Hoff's datasets are all here: http://www.stat.washington.edu/hoff/Book/Data/hwdata/
+
+Homework 9
+See attached.
+
+Homework 10
+(1) Exercise at the end of the lecture notes, BayesianHypothesisTesting.pdf.
+(2) Hoff exercise 9.2
+
+Homework 11
+See attached.
+
+

@@ -1,0 +1,43 @@
+\documentclass[12pt]{article} 
+\input{../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Homework 3}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\textbf{Do exercises 2, 3, 5, and 7 at the end of Module 3, and also the exercise below.}
+
+\subsubsection*{Exercise: Normal--Normal model}
+
+The normal (a.k.a. Gaussian) distribution $\N(\theta,\lambda^{-1})$ with mean $\theta$ and precision (inverse variance) $\lambda = 1/\sigma^2$ has p.d.f.
+$$ \N(x\mid \theta,\lambda^{-1}) = 
+\sqrt{\frac{\lambda}{2\pi}}\exp\Big(-\frac{\lambda}{2}(x-\theta)^2\Big). $$
+Suppose we have data $x_1,\ldots,x_n$ which we model as
+$$X_1,\ldots,X_n\iid\N(\theta,\lambda^{-1}).$$
+Assume $\lambda$ is fixed and known.  Consider a normal prior on $\theta$ with mean $\mu_0$ and
+precision $\lambda_0$, that is,
+$$ p(\theta) = \N(\theta\mid\mu_0,\lambda_0^{-1}) = 
+\sqrt{\frac{\lambda_0}{2\pi}}\exp\Big(-\frac{\lambda_0}{2}(\theta-\mu_0)^2\Big). $$
+Show that the posterior distribution is 
+$$p(\theta|x_{1:n}) = \N(\theta\mid M,L^{-1}) $$
+where $L = \lambda_0 + n\lambda$ and
+$$M = \frac{\lambda_0\mu_0 + \lambda \sum_{i=1}^n x_i}{\lambda_0 + n\lambda}.$$
+\vspace{2em}
+(Optional) For an extra challenge, can you find the marginal likelihood $p(x_{1:n})$?
+
+
+
+\end{document}
+
+
+
+
+
+

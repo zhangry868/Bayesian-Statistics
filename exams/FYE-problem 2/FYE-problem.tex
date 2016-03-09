@@ -1,0 +1,120 @@
+\documentclass[11pt]{article} 
+\usepackage{amssymb,amsfonts,amsmath,latexsym,amsthm}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\newcommand{\T}{\mathtt{T}}
+\newcommand{\Ga}{\mathrm{Gamma}}
+\newcommand{\Pareto}{\mathrm{Pareto}}
+\newcommand{\Uniform}{\mathrm{Uniform}}
+\newcommand{\I}{\mathds{1}}
+\begin{document}
+
+\subsection*{Problem}
+
+The Pareto distribution with $\alpha>0$ and $c>0$ has p.d.f.\
+$$ \Pareto(x|\alpha,c) = \frac{\alpha c^\alpha}{x^{\alpha+1}}\I(x>c). $$
+This is a power-law distribution in which the parameter $\alpha$ is the ``scaling constant''.
+Suppose $x_1,\ldots,x_n$ are the sizes of the populations of the $n$ largest cities in North Carolina. 
+Consider the following model for this data:
+$$ X_1,\ldots,X_n \overset{\text{iid}}{\sim} \Pareto(\alpha,c). $$
+\begin{enumerate}
+\item What is the distribution of $Y\mid Y>c$, when $Y\sim\Pareto(\alpha,c_0)$ and $0<c_0<c$?  
+\item There is a potential issue with using an i.i.d.\ model for this data, due to the fact that we are only seeing the largest $n$ cities
+    --- explain the issue.  However, supposing that we are interested only in $\alpha$ (not $c$),
+    how does the answer to the first part alleviate this issue?
+\item Derive the Jeffreys prior for $\alpha$, that is, $\pi(\alpha) \propto \sqrt{I(\alpha)}$ for $\alpha>0$, where
+    $I(\alpha) = -\mathds{E}\big(\frac{\partial^2}{\partial\alpha^2} \log p(X_i|\alpha,c)\big)$. Is this an improper prior?
+\item Using the Jeffreys prior for $\alpha$ and a flat prior on $c$, derive the full conditionals for Gibbs sampling
+    from the posterior on $\alpha$ and $c$.  (If you were unable to derive the Jeffreys prior for $\alpha$, use a semi-conjugate prior.)
+    Identify the full conditional for $\alpha$ as a well-known distribution.
+\item The full conditional for $c$ is not a very well-known distribution.  Use the inverse CDF method to derive a 
+    formula for transforming $\Uniform(0,1)$ samples into samples from this distribution.
+\item Now, suppose we have data on the sizes of the largest cities from all 50 states, say, the largest $n_i$ cities from state $i$.
+    Using the Pareto distribution as above, write down a hierarchical model in which each state has its own $\alpha_i$ and $c_i$,
+    using semi-conjugate (i.e., conditionally-conjugate) priors on the $\alpha_i$'s and $c_i$'s.
+    (Make sure your model enables information sharing among states.) Draw the directed graphical model.
+%\item Suppose you wanted to know whether $\alpha$ is a universal constant, in the sense that it is the same in all states.  
+%    In general terms, describe how to address this from a Bayesian hypothesis testing perspective.
+\end{enumerate}
+
+
+\newpage
+\subsection*{Solution}
+
+\begin{enumerate}
+\item The density of $Y\mid Y>c$ is
+\begin{align*}
+p(y\mid Y>c) &= \frac{p(y)}{\mathds{P}(Y>c)}\I(y>c) \propto \frac{\I(y>c_0)}{y^{\alpha +1}}\I(y>c) = \frac{\I(y>c)}{y^{\alpha +1}}\\
+&\propto \Pareto(y\mid \alpha, c),
+\end{align*}
+hence, $Y\mid Y>c \,\sim\,\Pareto(\alpha,c)$.
+\item Using only the largest cities is a form of selection bias. This could make the results invalid, since the distribution of the data will depend on how many of the largest cities we decide to look at, and consequently, the i.i.d.\ model is questionable. Using only the $n$ largest cities can be thought of as conditioning on the set of cities with size above a certain cutoff point $c$ between the $n$th and $(n+1)$th largest sizes. If we are only interested in $\alpha$, then by part 1, if the distribution of all cities (large and small) is Pareto, then the distribution of cities with size greater than $c$ will be Pareto with the same $\alpha$ --- thus, inferences for $\alpha$ will still be valid.
+\item As a function of $\alpha$,
+\begin{align*}
+\log p(x|\alpha,c) &= \mathrm{const} + \log\alpha +\alpha\log c - (\alpha +1)\log x\\
+\textstyle\frac{\partial}{\partial\alpha}\log p(x|\alpha,c) &= 1/\alpha + \log c - \log x\\
+\textstyle\frac{\partial^2}{\partial\alpha^2}\log p(x|\alpha,c) &= -1/\alpha^2
+\end{align*}
+and thus,
+\begin{align*}
+I(\alpha) &= -\mathds{E}\big(\textstyle\frac{\partial^2}{\partial\alpha^2}\log p(X_i|\alpha,c)\big) = 1/\alpha^2\\
+\pi(\alpha) &\propto \sqrt{I(\alpha)}\I(\alpha>0) = (1/\alpha)\I(\alpha>0).
+\end{align*}
+This is an improper prior, since $\int_0^\infty (1/\alpha) d\alpha = \infty$.
+\item The likelihood is
+$$ \frac{\alpha^n c^{n\alpha}}{\prod x_i^{\alpha+1}}\I(c<x_*) $$
+where $x_* = \min\{x_1,\ldots,x_n\}$, so the posterior is
+$$ p(\alpha,c|x_{1:n}) \propto \frac{\alpha^n c^{n\alpha}}{\prod x_i^{\alpha+1}}\I(c<x_*) (1/\alpha)\I(\alpha,c>0). $$
+Hence,
+$$ p(\alpha|x_{1:n},c) \propto \alpha^{n-1}\Big(\frac{c^n}{\prod x_i}\Big)^\alpha \I(\alpha>0) 
+\propto \Ga(\alpha\mid n,\,\textstyle\sum_i \log(x_i/c)) $$
+and 
+$$ p(c|x_{1:n},\alpha) \propto c^{n\alpha}\I(0<c<x_*). $$
+\item Consider a density of the form $p(x)\propto x^{a-1}\I(0<x<b)$ where $a,b>0$. (The full conditional for $c$ is of this form.) Since $\int_0^t x^{a-1} d x = t^a/a$, we have 
+$$ p(x) = \frac{a x^{a-1}}{b^a}\I(0<x<b) $$
+and the CDF is 
+$$ F(x) = \int_0^x p(\xi)d\xi = \frac{x^a}{b^a} $$
+for $x\in[0,b]$, $F(x) = 0$ for $x<0$, and $F(x) = 1$ for $x>b$. For $u\in(0,1)$, we have $u=F(x)$ if and only if $x = b u^{1/a}$. 
+Hence, to sample $X\sim p(x)$, we can draw $U\sim\Uniform(0,1)$ and set $X = b U^{1/a}$.
+\item There is more than one correct answer.  Here is one approach: for $i = 1,\ldots,50$, let
+\begin{align*}
+    & X_{i 1},\ldots,X_{i n_i}|\alpha_i,c_i\,\overset{\text{iid}}{\sim}\,\Pareto(\alpha_i,c_i)\\
+    & \alpha_i|a,b \,\sim\, \Ga(a,b)\\
+    & c_i|r,s\,\sim\, \Ga(r,s)
+\end{align*}
+and place independent Gamma priors on $a,b,r$, and $s$.
+Gamma distributions (including truncated Gammas) are semi-conjugate for both the $\alpha_i$'s and the $c_i$'s since 
+$$ p(\alpha_i|\cdots) \propto \Ga(\alpha_i\mid a+n_i,\, b + \textstyle\sum_j\log(x_{i j}/c_i)) $$
+and, letting $x_{i *} = \min\{x_{i 1},\ldots,x_{i n_i}\}$, 
+$$ p(c_i|\cdots) \propto \Ga(c_i\mid r + n_i\alpha_i,\, s)\I(0<c_i<x_{i *}) $$
+which is proportional to a truncated Gamma.
+Note that it is necessary to place a prior on at least one of $a,b,r,s$ in order to have information shared among states.
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{model.png}
+\end{center}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+

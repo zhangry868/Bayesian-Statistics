@@ -1,0 +1,330 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\renewcommand{\H}{\mathrm{H}}
+\newcommand{\jmatrix}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+
+\begin{document}
+\begin{center}
+\large\textbf{STA360/601 Final Exam}
+\end{center}
+
+\small
+
+\subsection*{Instructions}
+\begin{itemize}
+    \item Write your name, NetID, and signature below.
+    \item If you need extra space for any problem, continue on the back of the page.
+\end{itemize}
+
+\subsection*{Community Standard}
+To uphold the Duke Community Standard:
+\begin{itemize}
+\item I will not lie, cheat, or steal in my academic endeavors;
+\item I will conduct myself honorably in all my endeavors; and
+\item I will act if the Standard is compromised.
+\end{itemize}
+I have adhered to the Duke Community Standard in completing this exam.
+
+\vspace{1em}
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \item[] Name: \hrulefill
+    \item[] NetID: \hrulefill
+    \item[] Signature: \hrulefill
+\end{itemize}
+
+\subsection*{Score}
+%(For TA use only --- leave this section blank.)
+
+\vspace{1em}
+%\begin{minipage}{1.0\textwidth}
+\begin{enumerate}
+    \setlength\itemsep{1em}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+    \item \line(1,0){100}
+        \vspace{1em}
+    \item[] Overall: \line(1,0){200}
+\end{enumerate}
+
+\newpage
+\subsection*{List of common distributions}
+% todo: any others?
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \item[] $\displaystyle \Geometric(x|\theta) = \theta(1-\theta)^x\,\I(x\in\{0,1,2,\ldots\})$ for $0<\theta<1$
+    \item[] $\displaystyle \Bernoulli(x|\theta) = \theta^x(1-\theta)^{1-x}\,\I(x\in\{0,1\})$ for $0<\theta<1$
+    \item[] $\displaystyle \Binomial(x|n,\theta) = {n\choose x}\theta^x(1-\theta)^{n-x}\,\I(x\in\{0,1,\ldots,n\})$ for $0<\theta<1$
+    \item[] $\displaystyle \Poisson(x|\theta) = \frac{e^{-\theta}\theta^x}{x!}\,\I(x\in\{0,1,2,\ldots\})$ for $\theta>0$
+    \item[] $\displaystyle \Exp(x|\theta) = \theta e^{-\theta x}\,\I(x>0)$ for $\theta>0$
+    \item[] $\displaystyle \Uniform(x|a,b) = \frac{1}{b-a}\,\I(a<x<b)$ for $a<b$
+    \item[] $\displaystyle \Ga(x|a,b) = \frac{b^a}{\Gamma(a)}x^{a-1}e^{-b x}\,\I(x>0)$ for $a,b>0$
+    \item[] $\displaystyle \Pareto(x|\alpha,c) = \frac{\alpha c^\alpha}{x^{\alpha+1}}\,\I(x>c)$ for $\alpha,c>0$
+    \item[] $\displaystyle \Beta(x|a,b) = \frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}\,\I(0<x<1)$ for $a,b>0$
+    \item[] $\displaystyle \N(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\big(-\tfrac{1}{2\sigma^2}(x-\mu)^2\big)$
+        for $\mu\in\R$, $\sigma^2>0$
+    \item[] $\displaystyle \N(x|\mu,C) = \frac{1}{(2\pi)^{d/2}|C|^{1/2}}\exp\big(-\tfrac{1}{2}(x-\mu)^\T C^{-1} (x-\mu)\big)$
+        for $\mu\in\R^d$, $C\in\R^{d\times d}$ symmetric positive definite.
+\end{itemize}
+
+\subsection*{Exponential family form}
+$$ p(x|\theta) =\exp\big(\varphi(\theta)^\T t(x)-\kappa(\theta)\big) h(x) $$
+
+\subsection*{List of special functions}
+\label{special-functions}
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \item[] Beta function: $\displaystyle B(a,b) = \int_0^1 t^{a-1}(1-t)^{b-1} d t$ for $a,b>0$
+    \item[] Gamma function: $\displaystyle \Gamma(x) = \int_0^\infty t^{x-1} e^{-t} d t$ for $x>0$
+    %\item[] Log function for $a>1$: $\displaystyle \log a = \int_1^a (1/t) d t$
+\end{itemize}
+
+
+
+
+\normalsize
+
+\newpage
+\begin{enumerate}
+\item (14 points) Graphical models
+    \begin{enumerate}
+        \setlength\itemsep{16em}
+        \item (4 points) Draw the directed graphical model (DGM) for a Markov chain. Also draw the associated moral graph.
+        \item\label{HMM} (4 points)
+            A hidden Markov model is a distribution on $Z_1,\ldots,Z_n,X_1,\ldots,X_n$ that respects the DGM shown below.
+            Write the factorization of $p(z_1,\ldots,z_n,x_1,\ldots,x_n)$ implied by this DGM.
+            % todo: insert diagram of HMM graphical model
+        \item (6 points) Consider a distribution respecting the DGM in part \ref{HMM}.
+            For each question, circle either Yes, No, or Indeterminate. Indeterminate means that the answer cannot be determined 
+            from the information given.  (You do not need to justify your answer.)
+            \vspace{1em}
+            \begin{enumerate}
+                \setlength\itemsep{1em}
+                \item Is $X_1 \perp X_3 \mid Z_2$? \hspace{1cm}  Yes \hspace{1cm} No \hspace{1cm} Indeterminate
+                \item Is $X_1 \perp X_3$? $\phantom{\,\mid Z_2}$ \hspace{1cm}  Yes \hspace{1cm} No \hspace{1cm} Indeterminate
+                \item Is $X_1 \perp X_3 \mid X_2$? \hspace{1cm}  Yes \hspace{1cm} No \hspace{1cm} Indeterminate
+            \end{enumerate}
+    \end{enumerate}
+
+
+
+
+\newpage
+\item\label{semi-conjugate} (10 points) (Semi-conjugate priors)\\
+    Given  $S\in\R^{d\times d}$ symmetric positive definite, and $\nu > d-1$,
+    the Wishart distribution with inverse scale $S$ and $\nu$ degrees of freedom has density
+    $$W_d(X\mid S^{-1},\nu) 
+    = \frac{|S|^{\nu/2} |X|^{(\nu-d-1)/2} \exp(-\tfrac{1}{2}\mathrm{tr}(S X))}{2^{\nu d/2}\Gamma_d(\nu/2)}$$
+    for $X\in\R^{d\times d}$ symmetric positive definite. 
+    Here, $\Gamma_d(\nu/2)$ is the multivariate gamma function (its definition is unimportant for this problem), and $\mathrm{tr}$ is the trace,
+    i.e., $\mathrm{tr}(A) = \sum_{i = 1}^d A_{i i}$.
+    
+    Show that the Wishart distribution is a (semi-)conjugate prior for $S$. 
+    That is, if $X_1,\ldots,X_n|S \,\iid\, W_d(S^{-1},\nu)$ and $S\sim W_d(S_0^{-1},\nu_0)$, then $p(S|X_{1:n})$ is a Wishart distribution.
+    (Show your work.) (Hint: $\mathrm{tr}(S X) = \mathrm{tr}(X S)$.)
+
+
+    
+       
+\newpage
+\item\label{multivariate-normal} (10 points) (Multivariate normal)\\
+    \begin{enumerate}
+        % \item Suppose $X =\jmatrix{X_1\\X_2}$ is bivariate normal,
+            % with means $\mu_1 =\E X_1 = 0$ and $\mu_2 =\E X_2 = 0$, standard deviations $\sigma_1 =\sigma(X_1) = 2$ and $\sigma_2 =\sigma(X_2)=1$, 
+            % and (Pearson's) correlation coefficient $\rho = \rho(X_1,X_2) = 0.9$.
+            % \begin{enumerate}
+            % \item (5 points) Compute the covariance matrix $C$ of $X$.
+            % \item (5 points) Which of the following represents the $\N(\mu,C)$ distribution?
+            % % todo: insert 4 density contour plots
+            % \end{enumerate}
+        \item (5 points) How can you transform a random vector $X\sim\N(\mu,C)$ into a $\N(0,I)$-distributed random vector? 
+            (Hint: Any symmetric positive definite matrix $C$ can be factored as $C = U\Lambda U^\T$ where $U$ is orthogonal and
+            $\Lambda$ is diagonal with positive diagonal entries. Use this and the affine transformation property.)
+        \item (5 points) Suppose $X\sim\N(a,C)$ and $Y\sim\N(b,D)$ independently, 
+        with means $a,b\in\R^d$ and covariance matrices $C,D\in\R^{d\times d}$ respectively.
+        What is the distribution of $X + Y$? Justify your answer.
+        (Hint: A fairly easy way to do this is to note that $\jmatrix{X\\Y}$ is multivariate normal, and use the affine transformation property.)
+    \end{enumerate}
+\newpage
+(Extra paper for question \ref{multivariate-normal}.)
+    
+    
+    
+    
+%\newpage
+%\item\label{OLS} (10 points) (Linear regression)\\
+    %Derive the ordinary least squares (OLS) estimate (that is, the maximum likelihood estimate) of the coefficient vector $\beta\in\R^p$
+    %in the usual linear regression model, in which $Y_i|x_i\sim \N(\beta^\T x_i,\sigma^2)$ independently for $i = 1,\ldots,n$.
+    %Assume $\sigma^2$ is fixed and known. (Show your work.)
+
+\newpage
+\item\label{linreg} (14 points) (Linear regression, Variable selection)\\
+    Vibration analysis is often used to monitor the condition of large complicated factory equipment.
+    To monitor a particular machine, you have a sensor that precisely measures the position of the machine over time.
+    Suppose that at times $x_1,\ldots,x_n\in\R$, you obtain position measurements $y_1,\ldots,y_n\in\R$.
+    Since the movement is periodic, you model the mean position at time $x_i$ as 
+    $$ \sum_{k=0}^m c_k \cos(2\pi k x_i) $$
+    for some known $m$ and some unknown $c_0,c_1,\ldots,c_m\in\R$.
+    \begin{enumerate}
+        \item (5 points) Assuming Gaussian noise, write down the likelihood of a linear regression model for the position measurements.
+            Assume a common variance $\sigma^2$ for all times.
+        \item (4 points) Write down a (semi-)conjugate prior for the regression coefficients.
+        %\item Write down semi-conjugate (hyper)priors for the (hyper)parameters of your prior on the regression coefficients.
+        \item (5 points) Each coefficient $c_k$ represents the amount of vibration at a particular frequency.  To analyze the machine,
+            you want to know which frequencies it is vibrating at.  
+        \begin{enumerate}
+            \item In words, describe how variable selection can be used to address this.
+            %\item Suppose you want to implement a Gibbs sampler to perform Bayesian variable selection.
+                %What is the disadvantage of using a semi-conjugate prior (as above) versus a fully-conjugate prior
+                %(like a g-prior as in the homework)?
+            \item You want to do Gibbs sampling for variable selection.
+                Assume you have already derived an expression for the marginal likelihood $p(y|x,z)$,
+                where $y=y_{1:n}$, $x=x_{1:n}$, and $z=z_{1:m}$ with $z_k\in\{0,1\}$
+                being the indicator variable for whether $c_k$ is included.
+                Assuming a uniform prior on $z$, derive an expression for $\Pr(Z_k = 1\mid z_{-k},y,x)$,
+                where $z_{-k}$ denotes the variables in $z$ other than $z_k$.
+        \end{enumerate}
+    \end{enumerate}
+\newpage
+(Extra paper for question \ref{linreg}.)
+    
+
+
+
+
+
+    
+    
+    
+\newpage
+\item\label{BHT} (14 points) (Bayesian hypothesis testing)\\
+    Suppose you are conducting an experiment on the effects of exercise on cognitive performance.  
+    To assess performance, you measure the time required to solve a creative thinking task.
+    You divide subjects into a control group of $m$ subjects and a test group of $n$ subjects.
+    The test group exercises for 30 minutes before performing the task, while the control group does not exercise beforehand.
+    You measure the time required by each individual to solve the task, yielding data $x_1,\ldots,x_m$ and $y_1,\ldots,y_n$.
+    You want to consider the evidence for the two hypotheses, $\H_0$: no difference between groups, and $\H_1$: the groups are different.
+    \vspace{1em}
+    \begin{enumerate}
+        \setlength\itemsep{1em}
+        \item (5 points) Modeling the data as Exponential, write down a model to address this using Bayesian hypothesis testing.
+            Use conjugate priors, and assume the two hypotheses have equal prior probability.
+        \item (5 points) Give a closed-form expression for the Bayes factor $B_{0 1}$ in favor of $\H_0$ over $\H_1$.
+        \item (4 points) Give an expression for the posterior probability of $\H_1$ in terms of the Bayes factor $B_{0 1}$.
+    \end{enumerate}
+\newpage
+(Extra paper for question \ref{BHT}.)
+
+
+
+
+\newpage
+\item\label{hierarchical} (14 points) (Hierarchical models, Gibbs sampling)\\
+    In another experiment on cognitive performance, you have $n$ subjects play the computer game Tetris, and you count how many 
+    ``tetrises'' they get, resulting in a nonnegative integer score. Each subject plays the game 5 times, yielding 
+    scores $x_{i 1},\ldots,x_{i 5}\in\{0,1,2,\ldots\}$ for subject $i$.
+    \vspace{1em}
+    \begin{enumerate}
+        \setlength\itemsep{1em}
+        \item (5 points) Modeling the scores for each subject as Poisson, write down a hierarchical model for this data,
+            using semi-conjugate priors. For the top level in your model, put a prior on only one of the hyperparameters
+            (one for which there is a nice semi-conjugate prior).
+        \item (4 points) Draw the directed graphical model (DGM) for your model.
+        \item (5 points) Derive closed form expressions for all the full conditionals required to do Gibbs sampling.
+            (Show the derivations.)
+    \end{enumerate}
+\newpage
+(Extra paper for question \ref{hierarchical}.)
+
+    
+    
+    
+% \newpage
+% \item\label{diagnostics} (10 points) (MCMC diagnostics)\\
+    % \begin{enumerate}
+        % %\item Consider a Markov chain $X = (X_1,X_2,\ldots)$. Write the definition of the autocorrelation function (ACF) $\rho_t(X)$,
+        % %or, if you prefer, the sample autocorrelation function $\hat\rho_t(X)$.
+        % \item Which of the following autocorrelation functions (ACFs) indicates better mixing?
+        % (Choose one. You do not need to justify your answer.)
+        
+        % \item For each of the following traceplots, select the most appropriate interpretation from the following three choices:
+        % \begin{itemize}
+            % \item The chain has converged.
+            % \item The chain has not converged.
+            % \item It looks like the chain has converged, but it is possible that it hasn't.
+        % \end{itemize}
+         % % todo: insert 3 plots, along with choices a, b, c
+        
+    % \end{enumerate}
+    
+    
+    
+    
+    
+\newpage
+\item\label{MCs} (10 points) (Markov chains)\\
+    Find a transition matrix $T$ on three states (say, $\{1,2,3\}$) which gives rise to a Markov chain
+    that is irreducible and has stationary distribution $\pi = (1/4, 1/2, 1/4)$, BUT is periodic (i.e., not aperiodic).
+    (For full credit, you must explain why it has each of the properties stated above.)
+    %(Hint: It may be easier to use your intuition to guess the solution, and verify that it works.)
+
+
+
+    
+    
+\newpage
+\item\label{MH} (14 points) (Metropolis--Hastings MCMC)\\
+    Consider a target distribution $\pi(x)$ on a discrete space, and a transition matrix $T$.
+    \begin{enumerate}
+        \item (4 points) What does it mean for $\pi$ and $T$ to have detailed balance? (Give the mathematical definition.)
+        \item (5 points) Suppose $T$ is the transition matrix corresponding to a Metropolis--Hastings move with proposal distribution $q_x(x^*)$.
+            Write down an expression for $T_{x y}$ when $x\neq y$.
+            (Note: A Metropolis--Hastings move refers to a single propose--accept/reject iteration.)
+        \item (5 points) Using your answers from the first two parts, show that Metropolis--Hastings moves always have detailed balance.
+            Assume that $\pi(x)>0$ and $q_x(x^*)>0$ for all $x,x^*$.
+            (Hint: You don't need an explicit expression for $T_{x x}$ since the case of $x = y$ is trivial.)
+    \end{enumerate}
+
+
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+\end{enumerate}
+
+
+
+
+\end{document}
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+
+Bayes.jpg
+Source: http://commons.wikimedia.org/wiki/File:Thomas_Bayes.gif
+License: This work is in the public domain in the United States, and those countries with a copyright term of life of the author plus 100 years or less.
+Date accessed: 12/28/2014
+
+Price.jpg
+Source: http://commons.wikimedia.org/wiki/File:Richard_Price.jpg
+License: This work is in the public domain in the United States, and those countries with a copyright term of life of the author plus 100 years or less.
+Date accessed: 12/28/2014     
+
+Laplace.jpg
+Source: http://commons.wikimedia.org/wiki/File:Pierre-Simon-Laplace_(1749-1827).jpg
+License: (POSSIBLE ISSUES WITH LICENSE --- SEE SOURCE) This image (or other media file) is in the public domain because its copyright has expired. This applies to Australia, the European Union and those countries with a copyright term of life of the author plus 70 years. 
+Date accessed: 12/28/2014
+
+Bernoulli.jpg
+Source: http://commons.wikimedia.org/wiki/File:Jakob_Bernoulli.jpg
+License: (POSSIBLE ISSUES WITH LICENSE --- SEE SOURCE) This image (or other media file) is in the public domain because its copyright has expired. This applies to Australia, the European Union and those countries with a copyright term of life of the author plus 70 years. 
+Date accessed: 12/28/2014
+
+Beta.png
+Source: Original work by Jeffrey W. Miller.
+
+elephant-posterior.jpg
+Source: http://wildaboutanimals.forumotion.net/t1808-elephants-of-the-mara-june-2012
+        http://i33.servimg.com/u/f33/17/63/41/49/p1030711.jpg
+        Posted by "Safariman", Buckinghamshire
+License: UNKNOWN
+Date accessed: 12/28/2014
+
+posterior.png
+Source: Original work of Jeffrey W. Miller.
+
+Pascal.jpg
+Source: http://commons.wikimedia.org/wiki/File:Blaise_pascal.jpg
+License: (POSSIBLE ISSUES WITH LICENSE --- SEE SOURCE) This image (or other media file) is in the public domain because its copyright has expired. This applies to Australia, the European Union and those countries with a copyright term of life of the author plus 70 years. 
+Date accessed: 12/31/2014
+
+Wald.jpg
+Source: http://commons.wikimedia.org/wiki/File:Abraham_Wald.jpg
+License: This file is licensed under the Creative Commons Attribution-Share Alike 2.0 Germany license.
+The image was not altered in any way.
+(The share-alike condition does not apply to my notes, since CC BY-SA 2.0 states that "... The above applies to the Work as incorporated in a Collective Work, but this does not require the Collective Work apart from the Work itself to be made subject to the terms of this License.")
+Date accessed: 12/31/2014        
+
+rho.png
+Source: Original work by Jeffrey W. Miller.
+
+diagram.tex
+Source: Original work by Jeffrey W. Miller.
+
+procedures.png
+Source: Original work by Jeffrey W. Miller.
+
+risk.png
+Source: Original work by Jeffrey W. Miller.
+
+
+
+
+

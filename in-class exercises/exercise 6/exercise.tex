@@ -1,0 +1,52 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{In-class exercise}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\subsection*{Instructions}
+\begin{itemize}
+\item \textbf{Don't look at the solution yet!} This is for your benefit.
+\item This exercise must be submitted within 48 hours of the lecture in which it was given. 
+\item As long as you do the exercise on time, you get full credit---your performance does not matter.
+\item Without looking at the solution, take 5 minutes to try to solve the exercise.
+\item Pre-assessment: Write down how correct you think your answer is, from 0 to 100\%.
+\item Post-assessment: Now, study the solution and give yourself a ``grade'' from 0 to 100\%.
+\item Submit your work on the course website, including the pre- and post- assessments.
+\end{itemize}
+
+\subsection*{Exercise}
+Suppose $X_1,\dotsc,X_n\iid\N(\theta,\sigma^2)$, and $\theta$ is given a $\N(\mu_0,\sigma_0^2)$ prior.
+\begin{itemize}
+\item[(a)] When $n=1$, what is the marginal likelihood, $p(x_1)$? %(HINT: There is an easy way and a hard way.)
+\item[(b)] When $n>1$, is it true that the marginal likelihood factors as $p(x_{1:n}) = p(x_1)\cdots p(x_n)$?
+\end{itemize}
+
+
+\newpage
+\vfill
+\rotatebox{180}{
+\begin{minipage}[t][\textheight][t]{\textwidth}
+\subsection*{Solution}\scriptsize
+\subsubsection*{Part (a)}
+We could equivalently define the model in the following way: $\btheta\sim\N(\mu_0,\sigma_0^2)$ and $X_i =\btheta + Z_i$, where $Z_i\sim \N(0,\sigma^2)$ independently (that is, independently of each other and of $\btheta$) for $i = 1,\dotsc,n$. Using the rule for linear combinations of independent normals, the marginal distribution of $X_i$ is $\N(\mu_0,\sigma_0^2 + \sigma^2)$.
+\subsubsection*{Part (b)}
+No. If it were true that $p(x_{1:n}) = p(x_1)\cdots p(x_n)$, this would imply that the $X_i$'s are independent, but we know this is not the case, since, for instance, the posterior predictive $p(x_2|x_1)$ depends on $x_1$.
+(Note: The $X_i$'s are \textit{conditionally} independent given $\theta$, but here we are talking about their marginal distribution.)
+\end{minipage}}
+
+\end{document}
+
+
+
+
+
+

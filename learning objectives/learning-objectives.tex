@@ -1,0 +1,503 @@
+\documentclass[12pt]{article} 
+\input{../custom}
+
+\title{Learning Objectives for STA 360/601}
+\author{(What you should know for the final.)}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\section{General concepts}
+(References: Chapter 1 (Foundations), Hoff chapter 1 and 2.2--2.6, mathematicalmonk PP 2.1--5.5, ML 7.1--7.6)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the difference between probability and statistics.
+\item Bayes' theorem: Know the formula for Bayes' theorem, understand what it means, and know how to apply it.
+\item Be able to explain the Bayesian approach to statistics.
+\item Proportionality: Know the definition, know how to use it to derive conditional distributions such as the posterior, and understand why it works (if two distributions are proportional, they are equal).
+\item Cast of characters: Know the definitions (mathematical formulas) of, and understand the purpose of:
+\begin{itemize}
+\item likelihood / generating distribution
+\item prior
+\item posterior
+\item marginal likelihood
+\item posterior predictive
+\item loss function
+\item posterior expected loss
+\item risk / frequent risk
+\item integrated risk
+\end{itemize}
+\end{itemize}
+
+
+\section{Probability distributions}
+(References: Hoff page 253)
+Note: You are not expected to memorize the form of each distribution (e.g., the p.d.f./p.m.f.\ and c.d.f.).  A sheet with common distributions will be provided on the exam.
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand when a given probability distribution would be appropriate for modeling a given type of data set (e.g., discrete versus continuous, appropriate range of values)
+\item Distributions to be familiar with: 
+\begin{itemize}
+\item Discrete: Geometric, Bernoulli, Binomial, Poisson, Uniform
+\item Continuous (univariate): Exponential, Uniform, Gamma, Beta, Pareto, Normal, Inverse Gamma, Cauchy, t-distribution
+\item Continuous (multivariate): Multivariate Normal/Gaussian, Wishart, Inverse Wishart
+\end{itemize}
+\item Be able to give examples of when a distribution would be appropriate/inappropriate.
+\end{itemize}
+
+  
+
+\section{Analytical derivations}
+(References: Chapters 1, 3, 4, 6, Hoff chapters 3, 5, 6, 7)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Be able to derive:
+\begin{itemize}
+\item the posterior,
+\item the marginal likelihood, and
+\item the posterior predictive,
+\end{itemize}
+for simple models with conjugate priors, such as:
+\begin{itemize}
+\item $\Bernoulli(\theta)$ with $\Beta(\theta|a, b)$ prior
+\item $\Binomial(n,\theta)$ with $\Beta(\theta|a, b)$ prior
+\item $\Geometric(\theta)$ with $\Beta(\theta|a, b)$ prior
+\item $\Uniform(0,\theta)$ with $\Pareto(\theta|\alpha,c)$ prior
+\item $\Exp(\theta)$ with $\Ga(\theta|a, b)$ prior
+\item $\Ga(\alpha,\theta)$ with $\Ga(\theta|a, b)$ prior
+\item $\Poisson(\theta)$ with $\Ga(\theta|a, b)$ prior
+\item $\N(\mu,\lambda^{-1})$ with $\N(\mu|\mu_0,\lambda_0^{-1})$ prior
+\item $\N(\mu,\lambda^{-1})$ with $\Ga(\lambda|a,b)$ prior
+\item $\N(\mu,\Lambda^{-1})$ (multivariate) with $\N(\mu|\mu_0,\Lambda_0^{-1})$ prior
+\item $\N(\mu,\Lambda^{-1})$ (multivariate) with $\mathrm{Wishart}(\Lambda|S,\nu_0)$ prior
+\end{itemize}
+\end{itemize}
+
+
+\section{Decision theory}
+(References: Chapter 1 (Foundations), mathematicalmonk ML 3.1--3.4 and 11.1--11.8)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand the decision theoretic setup: state, observation, action, loss.
+\item Know the Bayesian approach to decision theory (minimize posterior expected loss).
+\item Know the definition of a Bayes procedure.
+\item Be able to compute the Bayes procedure (in closed-form when possible) for:
+\begin{itemize}
+\item 0--1 loss
+\item square loss
+\item other simple loss functions, such as quadratic functions of the state and action
+\end{itemize}
+\item Be able to give examples of real-world decision problems that could be addressed using decision theory.
+\item Know the definition of admissibility.
+\end{itemize}
+
+
+\section{Exponential families}
+(References: Chapter 3 (Exp Fams and Conj Priors), Hoff section 3.3, mathematicalmonk ML 5.1--5.4)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the definition of a one-parameter exponential family.
+\item Know the definition of a (multi-parameter) exponential family.
+\item Be able to show that a given collection of distributions is an exponential family (one-parameter or multi-parameter).
+\item Be able to identify the sufficient statistics function for a given exponential family (one-parameter or multi-parameter).
+\item Know the definition of natural form / canonical form, and be able to put a given exponential family into natural form. 
+\item Be able to give examples of exponential families.
+\end{itemize}
+
+
+\section{Conjugate priors}
+(References: Chapter 3 (Exp Fams and Conj Priors), Hoff section 3.3, mathematicalmonk ML 7.4)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the definition of a conjugate prior family.
+\item Be able to show that a given collection of distributions is a conjugate prior for a given generator/likelihood family.
+\item Be able to show that mixtures of conjugate priors are conjugate priors.
+%\item Be able to show that truncated conjugate priors are conjugate priors.
+\item Know how to construct a conjugate prior for an exponential family.
+\item Understand that conjugate priors are not unique.
+\item Be able to give examples of conjugate priors.
+\end{itemize}
+
+
+
+\section{Univariate Normal model}
+(References: Chapter 4 (Univariate Normal model), Hoff chapter 5, mathematicalmonk ML 7.9--7.10)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand when the Normal model is appropriate.
+\item Know the basic properties of the normal distribution: mean, median, mode; symmetric; 95\% probability inside $\pm$1.96 sigma.
+\item Know the relationship between the standard deviation, variance, and precision.
+\item Know the formula for the distribution of linear combinations of independent normals.
+\item Know how to construct a conjugate prior for the mean (Normal--Normal model).
+\item Know how to construct a conjugate prior for the mean and precision (NormalGamma--Normal model)
+\item Be able to derive the posterior for the Normal--Normal model. (You are not expected to memorize it.)
+\item Be able to derive the posterior for the NormalGamma--Normal model. (You are not expected to memorize it.)
+\item Be able to choose appropriate values for the prior parameters (hyperparameters).
+\item Understand the relationship between the Gamma distribution and Inverse Gamma distribution, and understand how they are used for constructing priors on the precision and variance, respectively.
+\item Know that the Normal model is sensitive to outliers.
+\end{itemize}
+
+
+\section{Monte Carlo}
+(References: Chapter 5 (Monte Carlo approx), Hoff chapter 4, mathematicalmonk ML 17.1--17.4)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know what a (simple) Monte Carlo approximation is.
+\item Know what kinds of things can be approximated using Monte Carlo.
+\item Understand the advantages and disadvantages of sampling-based methods.
+\item Know the standard deviation (i.e., the RMSE) of a Monte Carlo approximation, and know that it represents the rate of convergence.
+\item Be able to derive the basic properties of simple Monte Carlo approximations: consistency, unbiasedness, variance, standard deviation, RMSE.
+\item Be able to identify the limit of a given Monte Carlo approximation.
+\item Know how to construct a Monte Carlo approximation for: posterior probabilities, posterior densities, posterior expected loss, posterior predictive distribution, marginal likelihood.
+\item Know the condition under which a simple Monte Carlo approximation is consistent.
+\item Be able to give an example for which a simple Monte Carlo approximation is not consistent.
+\item Know that the harmonic mean approximation is consistent, but performs poorly.
+\end{itemize}
+
+
+
+\section{Importance sampling}
+(References: Chapter 5 (Monte Carlo approx), mathematicalmonk ML 17.5--17.7)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Be able to derive the basic importance sampling approximation.
+\item Know how to construct a basic importance sampling approximation for a given expectation and a given proposal distribution.
+\item Be able to identify the limit of a given importance sampling approximation.
+\item Understand the advantages and disadvantages of importance sampling compared to simple Monte Carlo.
+\item Be able to derive the basic properties: consistency, unbiasedness, variance, standard deviation, RMSE.
+\item Understand the properties that the proposal distribution must have in order to obtain a consistent importance sampling approximation.
+\item Understand how to choose the proposal distribution, in order to minimize the approximation error.
+\item Know that it is possible to handle unknown normalization constants.
+\end{itemize}
+
+
+
+
+\section{Basic techniques for generating samples}
+(References: Chapter 5 (Monte Carlo approx), mathematicalmonk ML 17.8--17.14)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Be able to apply the inverse c.d.f.\ method (derive a formula for transforming $\Uniform(0,1)$ samples into samples from the desired distribution), given the p.d.f.\ of the desired distribution, possibly with an unknown normalization constant.
+\item Know that the c.d.f.\ of a continuous distribution transforms samples from that distribution into $\Uniform(0,1)$ samples.
+\item Know the precise statement of the inverse c.d.f.\ method, and understand why it is necessary to use the generalized inverse.
+\item Understand the rejection principle, and be able to show that it is true.
+\item Understand the projection principle, and be able to show that it is true.
+\item Understand the rejection sampling procedure, and be able to show that it is true.
+\end{itemize}
+
+
+
+
+\section{Gibbs sampling}
+(References: Chapter 6 (Gibbs sampling), Hoff chapter 6)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the basic Gibbs sampling algorithm for a distribution $p(\theta_1,\ldots,\theta_k)$.
+\item Be able to derive a Gibbs sampler for a given distribution.
+\item Know the following terminology: full conditional distribution, sweep/scan, Gibbs updates, burn-in period, good mixing.
+\item Understand the advantages and disadvantages of MCMC.
+\item Know the definition of a Markov chain.
+\item Know how to use the output of an MCMC algorithm to approximating the following quantities:
+\begin{itemize}
+\setlength\itemsep{0em}
+    \item posterior expectations
+    \item posterior probability of a given event
+    \item posterior densities and c.d.f.s
+    \item posterior predictive density and c.d.f.
+\end{itemize}
+\item Understand why a burn-in period is often needed.
+\item Understand the utility of semi-conjugate (a.k.a. conditionally-conjugate) priors in the context of Gibbs sampling.
+\item Know how to choose semi-conjugate priors for commonly-used models (e.g., mean and variance for normal distribution).
+\item Understand why Gibbs sampling is so useful when using hyperpriors and/or hierarchical models.
+\item Understand the concept of data augmentation / auxiliary variables.
+\end{itemize}
+
+
+
+
+\section{Priors}
+(References: Chapters 3 \& 6, Hoff chapter 9)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand the following terms:
+\begin{itemize}
+\setlength\itemsep{0em}
+    \item conjugate prior
+    \item semi-conjugate prior
+    \item weakly-informative prior
+    \item unit-information prior
+    \item g-prior
+    \item data-dependent prior
+    \item improper prior
+    \item non-informative prior
+\end{itemize}
+\item Understand how the ``posterior'' is defined when using an improper prior (see Chapter 6).
+\item Be able to choose prior parameter values that appropriately represent your prior beliefs.
+\end{itemize}
+
+
+
+
+\section{MCMC diagnostics}
+(References: Chapter 6 (Gibbs sampling), Hoff section 6.6)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know how to construct and interpret the following MCMC diagnostics:
+\begin{itemize}
+\setlength\itemsep{0em}
+    \item traceplots
+    \item running averages
+    \item autocorrelation function (ACF)
+    \item scatterplots
+    \item estimated posterior densities
+\end{itemize}
+\item Understand the limitations of MCMC diagnostics (we can only tell when things are going wrong, not when things are going right).
+\item Be able to give a specific example in which mixing will appear to be fine according to standard diagnostics, but mixing will actually be very poor.
+%\item Be able to give examples in which Gibbs sampling doesn't mix well.
+\item Understand why a change of variables can sometimes significantly improve MCMC mixing.
+\item Understand why MCMC algorithms sometimes mix poorly on distributions with multiple modes.
+\end{itemize}
+
+
+%\section{Posterior summaries}
+%\begin{itemize}
+%\setlength\itemsep{0em}
+%\item Know the definition of a credible interval (a.k.a. Bayesian confidence interval), and how this differs from a frequentist confidence interval.
+%\item 
+%\end{itemize}
+
+
+
+% \section{Statistical thinking}
+% \begin{itemize}
+% \setlength\itemsep{0em}
+% \item Understand the importance of knowing when some data is missing or censored (see Chapter 6).
+% \item 
+% \end{itemize}
+
+
+
+
+\section{Multivariate normal/Gaussian distribution}
+(References: Hoff chapter 7, mathematicalmonk PP 6.1--6.10)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the density (p.d.f.) of the multivariate normal distribution.
+\item Know the definitions of:
+\begin{itemize}
+\setlength\itemsep{0em}
+    \item the covariance and (Pearson's) correlation coefficient between two univariate random variables.
+    \item the covariance matrix and the precision matrix.
+    \item symmetric positive definite matrix (know at least two definitions).
+    \item matrix determinant (know at least two definitions).
+    \item matrix inverse.
+\end{itemize}
+\item Know how to parameterize the covariance matrix of a bivariate normal in terms of the standard deviations $\sigma_1,\sigma_2$ and the correlation coefficient $\rho$.
+\item Know the relationship between independence and zero correlation among entries of a multivariate normal vector.
+\item Know the affine transformation property.
+\item Know how to construct a multivariate normal random vector from i.i.d.\ univariate standard normals.
+\item Know how to transform a multivariate random normal vector into i.i.d.\ univariate standard normals (``sphering'').
+\item Know how to put a semi-conjugate prior on the mean and covariance matrix.
+\item Know how to put a semi-conjugate prior on the mean and precision matrix.
+\item Be able to derive the full conditionals for the mean and covariance (or precision) when using a semi-conjugate prior.
+\item Recognize the multivariate normal density as $\exp(\text{quadratic})$.
+\end{itemize}
+% Know that the conditional distributions of a multivariate normal are multivariate normal.
+% Know that the marginal distributions of a multivariate normal are multivariate normal.
+% Know that the sum of independent multivariate normals is multivariate normal.
+
+
+
+\section{Conditional independence relationships and graphical models}
+(References: Bishop chapter, mathematicalmonk ML 13.1--13.9)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand that a graphical model does not actually specify a model, but rather a set of conditional independence properties.
+\item Understand why graphical models are useful.
+\item Know how to write down a directed graphical model (DGM) for a given probabilistic model.
+\item Know how to write down the factorization of the joint distribution specified by a DGM.
+\item Know what it means for a distribution to respect a given DGM.
+\item Understand that one cannot determine \textit{dependence} from a graphical model, only independence.
+\item Be able to write down a DGM that is respected by any distribution on 5 variables.
+\item Be able to determine the moral graph associated with a given DGM.
+\item Know what it means for a distribution to respect a given undirected graphical model (UGM).
+\item Know how to determine conditional independence relationships from a UGM.
+\end{itemize}
+
+
+
+
+\section{Group comparisons and hierarchical models}
+(References: Hoff chapter 8)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand how to define a hierarchical model for data from several groups.
+\item Be able to write down an appropriate hierarchical model, given only a verbal description of the data.
+\item Be able to give examples in which a hierarchical model would be useful.
+\item Understand the concept of ``sharing statistical strength'' (when using a hierarchical model, data from one group helps to infer the parameters of another group).
+\item Be able to derive a Gibbs sampler for a hierarchical model with semi-conjugate priors
+    (including, but not limited to, the hierarchical normal models described in Hoff 8.3 and 8.5).
+\item Understand how deFinetti's theorem can be used to justify modeling the observations with each group, as well as the 
+    group parameters, as conditionally i.i.d.
+\item Understand the concept of shrinkage, and why it can improve performance.
+\end{itemize}
+
+
+
+
+\section{Linear regression}
+(References: Hoff chapter 9, mathematicalmonk ML 9.1--10.7)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Be able to write down the normal linear regression model.
+\item Be able to identify when it makes sense to use linear regression in a given problem.
+\item Understand how basis functions can be used to model non-linear relationships between the predictor variables $x_i$ and outcomes $y$.
+\item Understand what is ``linear'' about linear regression (the mean $\E(Y|x)$ is a linear function of the parameters $\beta$, but not necessarily
+    of the predictor variables $x_i$).
+\item Be able to derive the ordinary least squares (OLS) estimator of the coefficients (i.e., the maximum likelihood estimator).
+\item Know how to define semi-conjugate priors for the coefficients $\beta$ and the variance $\sigma^2$ (or precision $\lambda$).
+\item Know how to define a g-prior for the coefficients.
+\item Know how to define a unit-information prior for the coefficients.
+\item Be able to derive the resulting full conditionals, for each of these types of priors
+    (note that the g-prior and unit-information are essentially special cases of the semi-conjugate prior).
+\end{itemize}
+
+
+
+
+\section{Bayesian hypothesis testing and model selection/inference}
+(References: Lecture notes on course website, Hoff section 9.3, mathematicalmonk ML 12.1--12.4)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand the concept of Bayesian hypothesis testing, and how it differs from frequentist hypothesis testing.
+\item Know that Bayesian hypothesis testing, Bayesian model selection, and Bayesian model averaging are all the same thing, mathematically.
+\item Be able to give examples of problems in which Bayesian hypothesis testing would make sense.
+\item Given a verbal description of a problem, be able to identify when Bayesian hypothesis testing would make sense, and write down an appropriate model.
+\item In simple cases, be able to compute the posterior on hypotheses analytically.
+\item Understand how decision theory can be used, if one hypothesis must be selected.
+\item Know the definition of Bayes factors, and how to interpret them.
+\item Know that ``posterior odds = Bayes factor times prior odds''.
+\item Be able to compute Bayes factors in simple cases.
+\item Understand how Bayes factors (and the posterior on hypotheses) can be strongly affected by the prior on parameters. Understand Lindley's ``paradox''.
+\item Understand why improper priors cannot be used when doing Bayesian hypothesis testing. (An improper prior is only defined up to a multiplicative constant.)
+\item Know that Bayes factors can be non-monotone in the sample size, and understand why this is the case.
+\end{itemize}
+
+
+
+
+\section{Bayesian variable selection}
+(References: Hoff section 9.3)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Understand why it can be advantageous to use a subset of variables, instead of all of them.
+\item Understand the basic idea of the backwards elimination procedure (but not necessarily the details).
+\item Understand how variable selection can be viewed as a hypothesis testing problem.
+\item Be able to write down a model for Bayesian variable selection.
+\item Be able to derive a sampler for the posterior, including a Gibbs sampler for the indicator variables (indicating which coefficients are included).
+\end{itemize}
+
+
+
+
+\section{Metropolis--Hastings MCMC}
+(References: Hoff chapter 10, mathematicalmonk ML 18.1--18.9)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Be able to write down the Metropolis algorithm and the Metropolis--Hastings (MH) algorithm.
+\item Be able to explain some of the advantages/disadvantages of MH versus Gibbs sampling.
+\item Be able to show that both the Metropolis algorithm and Gibbs sampling are special cases of MH.
+\item Understand the intuition behind the acceptance ratio in the Metropolis algorithm. 
+\item Understand the rough idea behind the acceptance ratio in the MH algorithm. 
+\item Understand why the choice of proposal distribution affects how well the resulting Markov chain mixes.
+\item In simple cases, be able to choose a reasonable proposal distribution.
+\item In simple cases, be able to derive the density of the proposal distribution (in order to compute the acceptance ratio).
+\end{itemize}
+
+
+
+
+\section{Markov chains and combining MCMC moves}
+(References: Hoff chapter 10, mathematicalmonk ML 14.1--14.3, 18.1--18.9)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the mathematical definition of a Markov chain (MC). ``The Markov property''
+\item Know the mathematical definition of the following terms, for a time-homogeneous MC taking values in a discrete (countable) space:
+    \begin{enumerate}
+        \item transition matrix
+        \item irreducible MC
+        \item aperiodic MC
+        \item stationary distribution (a.k.a. invariant distribution)
+        \item detailed balance
+    \end{enumerate}
+\item Be able to give examples of MCs that have each of the following properties, and examples that do not:
+    is irreducible, is aperiodic, has a stationary distribution. 
+\item In simple cases, be able to identify whether an MC is irreducible and/or aperiodic,
+    and be able to identify a stationary distribution (if one exists).
+\item Know what the ergodic theorem is, and how it is used in MCMC.
+\item Be able to show that having detailed balance implies that the target distribution is a stationary distribution.
+\item Understand the intuition behind the definition of stationary distribution, and detailed balance (e.g., the water flow analogy).
+\item Be able to show that the MH algorithm induces an MC having detailed balance (for the target distribution).
+\item Know how moves (transition matrices) can be combined, using
+    \begin{enumerate}
+        \item a product of transition matrices, i.e., a repeating cycle of moves (e.g., as in ``fixed-scan'' Gibbs sampling),
+        \item a mixture of transition matrices, i.e., a random choice of move (e.g., as in ``random-scan'' Gibbs).
+    \end{enumerate}
+\item Understand why the choice of move (generally-speaking) cannot depend on the state of the MC.
+\item Understand how MH can be used within Gibbs sampling (MH-within-Gibbs).
+\item Be able to derive an MH-within-Gibbs sampler for a given model.
+\end{itemize}
+
+
+
+
+\section{Advanced Monte Carlo methods}
+\begin{itemize}
+\setlength\itemsep{0em}
+\item In *very* general terms, know the basic idea of the following:
+    \begin{enumerate}
+        \item quasi-Monte carlo
+        \item slice sampling
+        \item Hamiltonian MC, a.k.a. hybrid MC
+        \item approximate Bayesian computation (ABC)
+    \end{enumerate}
+\end{itemize}
+
+
+
+
+\section{Mixture models}
+(References: mathematicalmonk ML 16.6)
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Know the definition of a mixture.
+\item Be able to write down a mixture model for a given problem.
+\item Know that mixture models can be used for density estimation, clustering, and latent structure modeling.
+\item Know how to derive a Gibbs sampler for a two-component finite mixture model (this was covered in Chapter 6).
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+\end{document}
+
+
+
+
+
+

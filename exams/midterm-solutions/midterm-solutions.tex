@@ -1,0 +1,232 @@
+\documentclass[12pt]{article} 
+\input{../custom}
+
+%\usepackage{cancel}
+\usepackage[normalem]{ulem}
+\newcommand{\ds}{\displaystyle}
+
+\usepackage{tikz}
+%\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=rectangle,draw,inner sep=2mm,rounded corners=2mm] (char) {#1};}}
+
+%\title{Midterm -- STA360/601}
+%\author{}
+%\date{}
+
+
+\begin{document}
+\setcounter{page}{3}
+\begin{center}
+\large\textbf{STA360/601 Midterm Solutions}
+\end{center}
+
+\begin{enumerate}
+\item (15 points)
+    \begin{enumerate}
+        \setlength\itemsep{2em}
+        \item (5 points) What is the formula for Bayes' theorem?
+
+            \vspace{1em}
+            $\displaystyle p(\theta|x) = \frac{p(x|\theta)p(\theta)}{p(x)}$
+            ~~OR~~
+            $p(\theta|x) \propto p(x|\theta)p(\theta)$
+            ~~OR~~
+            $\displaystyle \Pr(A|B) = \frac{\Pr(B|A)\Pr(A)}{\Pr(B)}$
+        \item (5 points) You receive $x_i$ telephone calls on day $i$, for $i=1,\ldots,n$. 
+            You wish to model this as $X_1,\ldots,X_n$ i.i.d.\ from some distribution.
+            Which of the following distributions would make sense to use? (Circle one.)
+            \vspace{1em}
+            \begin{enumerate}
+                \setlength\itemsep{1em}
+                \item \sout{Beta} (continuous, limited to $(0,1)$)
+                \item \circled{Poisson} (discrete, on $\{0,1,2,3,\ldots\}$) (also see ``law of small numbers'')
+                \item \sout{Bernoulli} (discrete, but limited to $\{0,1\}$)
+                \item \sout{Exponential} (continuous)
+            \end{enumerate}
+        \item (5 points) Suppose $X,X_1,\ldots,X_N$ are i.i.d.\ and assume $\E|X|<\infty$ and $\V(X)<\infty$.
+            What is the standard deviation of $$\frac{1}{N}\sum_{i=1}^N X_i?$$
+            Hint: It is the same as the RMSE of the Monte Carlo approximation. (Circle one.)
+            \vspace{1em}
+            \begin{enumerate}
+                \setlength\itemsep{1em}
+                \item $\V(X)/N$
+                \item $\V(X)/\sqrt N$
+                \item $\sigma(X)/N$
+                \item \circled{$\sigma(X)/\sqrt N$}
+            \end{enumerate}
+            $$ \V\Big(\tfrac{1}{N}\textstyle\sum X_i\Big)
+            = \tfrac{1}{N^2}\V\big(\textstyle\sum X_i\big) = \frac{1}{N^2}\sum_{i = 1}^N \V\big(X_i\big)
+            = \frac{1}{N}\V\big(X\big)$$
+            $$ \sigma\Big(\tfrac{1}{N}\textstyle\sum X_i\Big)
+            = \V\Big(\tfrac{1}{N}\textstyle\sum X_i\Big)^{1/2}
+            = \Big(\frac{1}{N}\V\big(X\big)\Big)^{1/2}
+            = \frac{1}{\sqrt{N}}\sigma(X)$$
+    \end{enumerate}
+
+\newpage
+\item (17 points) (Marginal likelihood)\\
+    Suppose $X_1,\ldots,X_n\iid\Geometric(\theta)$ given $\theta$. Consider a $\Beta(a,b)$ prior on $\theta$. What is the
+    marginal likelihood $p(x_{1:n})$?
+    
+    \vspace{1em}
+    (Your answer must be an explicit expression in terms of $a,b,x_1,\ldots,x_n,n$, and any of the special
+    functions on page 2. You must show your work to receive full credit.)
+
+    \vspace{1em} \hrule
+    \begin{align*}
+        & p(x_i|\theta) = \theta(1-\theta)^{x_i}\I(x_i\in\{0,1,2,\ldots\})\\
+        & p(\theta) = \frac{1}{B(a,b)}\theta^{a-1}(1-\theta)^{b-1}\I(0<\theta<1)\\
+    \end{align*}
+    For $x_1,\ldots,x_n\in\{0,1,2,\ldots\}$, 
+    \begin{align*}
+        p(x_{1:n}) & = \int p(x_{1:n}|\theta)p(\theta)d\theta \\
+        & = \int \Big(\prod_{i=1}^n p(x_i|\theta)\Big)p(\theta)d\theta \\
+        & = \int \theta^n (1-\theta)^{\sum x_i} \frac{1}{B(a,b)}\theta^{a-1}(1-\theta)^{b-1}\I(0<\theta<1)\\
+        & = \frac{1}{B(a,b)} \int \theta^{a+n-1}(1-\theta)^{b+\sum x_i-1}\I(0<\theta<1)\\
+        & = \frac{B(a+n,\,b+\sum x_i)}{B(a,b)}
+    \end{align*}
+    \begin{center}
+    \circled{$\displaystyle p(x_{1:n}) = \frac{B(a+n,\,b+\sum x_i)}{B(a,b)}$} if $x_1,\ldots,x_n\in\{0,1,2,\ldots\}$, and 0 otherwise.
+    \end{center}
+
+
+\newpage
+\item (17 points) (Exponential families, Normal distribution)\\
+    Show that the collection of $\N(\mu,\sigma^2)$ distributions, with $\mu\in\R$ and $\sigma^2>0$, is a
+    two-parameter exponential family, and identify the sufficient statistics function $t(x)=(t_1(x),t_2(x))^\T$ for your parametrization.
+
+    \vspace{1em} \hrule
+    $$\N(x|\mu,\sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\big(-\tfrac{1}{2\sigma^2}(x-\mu)^2\big)$$
+
+    $$-\tfrac{1}{2\sigma^2}(x-\mu)^2
+      = -\tfrac{1}{2\sigma^2}(x^2-2 x\mu+\mu^2) 
+      = -\tfrac{1}{2\sigma^2}x^2 + \tfrac{\mu}{\sigma^2} x -\tfrac{\mu^2}{2\sigma^2}$$
+
+    \begin{align*}
+        \N(x|\mu,\sigma^2) 
+        &= \frac{1}{\sqrt{2\pi\sigma^2}}\exp\Big(-\tfrac{1}{2\sigma^2}x^2 + \tfrac{\mu}{\sigma^2} x -\tfrac{\mu^2}{2\sigma^2}\Big) \\
+        &= \exp\Big(-\tfrac{1}{2\sigma^2}x^2 + \tfrac{\mu}{\sigma^2} x -\tfrac{\mu^2}{2\sigma^2} - \tfrac{1}{2}\log(2\pi\sigma^2)\Big) \\
+        &= \exp\big(\varphi(\theta)^\T t(x)-\kappa(\theta)\big) h(x)
+    \end{align*}
+    where
+    $\ds\theta = \begin{pmatrix}\mu\\\sigma^2\end{pmatrix}$,
+    $\ds\varphi(\theta) = \begin{pmatrix}-1/(2\sigma^2) \\ \mu/\sigma^2\end{pmatrix}$,
+    $\ds t(x) = \begin{pmatrix}x^2 \\ x\end{pmatrix}$,
+        $\kappa(\theta) = \tfrac{\mu^2}{2\sigma^2} + \tfrac{1}{2}\log(2\pi\sigma^2)$, and $h(x) = 1$.
+        Thus, the sufficient statistics function is $t(x) = (x^2 ,\, x)^\T$, for this choice of parametrization.
+
+        (There is more than one correct answer to this problem, since constants can be moved between $t(x)$ and $\varphi(\theta)$, as well as
+        between $h(x)$ and $\kappa(\theta)$.)
+
+\newpage
+\item (17 points) (Conjugate priors)\\
+    Suppose $X_1,\ldots,X_n\iid\Uniform(0,\theta)$ given $\theta$, that is,
+    $$ p(x_i|\theta) = \frac{1}{\theta}\,\I(0<x_i<\theta). $$
+    You would like to find a conjugate prior for $\theta$.
+    Show that the family of $\Pareto(\alpha,c)$ distributions, with $\alpha>0$ and $c>0$, is a conjugate prior family.
+
+    \vspace{1em} \hrule
+    Suppose the prior is
+    $$p(\theta) = \Pareto(\theta|\alpha,c) = \frac{\alpha c^\alpha}{\theta^{\alpha+1}}\,\I(\theta>c).$$
+    Letting $x_*=\min\{x_1,\ldots,x_n\}$ and $x^*=\max\{x_1,\ldots,x_n\}$,
+    \begin{align*}
+        p(x_{1:n}|\theta) &= \prod_{i=1}^n p(x_i|\theta) = \prod_{i=1}^n (1/\theta)\I(0<x_i<\theta) \\
+                          &= (1/\theta^n)\I(0<x_i<\theta \text{ for all $i$}) = (1/\theta^n)\I(x_*>0,\,x^*<\theta).\\
+    \end{align*}
+    The posterior is 
+    \begin{align*}
+        p(\theta|x_{1:n}) &\propto p(x_{1:n}|\theta)p(\theta) \\
+                          &= (1/\theta^n)\I(x_*>0,\,x^*<\theta) \frac{\alpha c^\alpha}{\theta^{\alpha+1}}\,\I(\theta>c)\\
+                          &\propto \frac{1}{\theta^{\alpha+n+1}}\,\I(\theta>x^*)\I(\theta>c)\\
+                          &= \frac{1}{\theta^{\alpha'+1}}\,\I(\theta>c')\\
+                          &\propto \Pareto(\theta|\alpha',c')
+    \end{align*}
+    where $\alpha' = \alpha+n$ and $c' = \max\{x^*,c\}$. Hence,
+    $p(\theta|x_{1:n}) = \Pareto(\theta|\alpha',c')$
+    and thus, the Pareto family is a conjugate prior.
+
+
+    
+\newpage
+\item (17 points) (Sampling methods)\\
+    Suppose $c>1$ and
+    $$ p(x) \propto \frac{1}{x}\,\I(1<x<c). $$
+    (Note that $p(x)$ is proportional to this, not equal to this.)
+    Assume you can generate $U\sim\Uniform(0,1)$.  Give an explicit formula, in terms of $c$ and $U$, for generating a sample from $p(x)$.  You must show your work to receive full credit.
+
+    \vspace{1em} \hrule
+    Use the inverse c.d.f.\ method. First, we need to find the normalization constant. For any $b\in[1,c]$,
+    $$ \int_1^b (1/x) d x = \log x \Big\vert_1^b = \log b - \log 1 = \log b.$$
+    Thus, 
+    $$ p(x) = \frac{1}{x \log c}\,\I(1<x<c). $$
+    For any $b \in [1,c]$, the c.d.f.\  is therefore
+    $$ F(b) = \int_1^b p(x) d x = \int_1^b \frac{1}{x \log c} d x = \frac{\log b}{\log c}. $$
+    Solving for the inverse c.d.f., for any $u\in(0,1)$,
+    \begin{align*}
+        u = F(x) &= \frac{\log x}{\log c} \\
+        u\log c &= \log x \\
+        \exp(u\log c) &= x \\
+        c^u &= x
+    \end{align*}
+    Hence, \circled{if $U\sim\Uniform(0,1)$, then $c^U\sim p(x)$.}
+
+
+
+\newpage
+\item (17 points) (Decision theory)\\
+    Consider a decision problem in which the state is $\theta\in\R$, the observation is $x$, you must choose an action
+    $\hat\theta\in\R$, and the loss function is
+    $$\ell(\theta,\hat\theta) = a\theta^2 + b\theta\hat\theta + c\hat\theta^2$$
+    for some known $a,b,c\in\R$ with $c>0$.
+    Suppose you have computed the posterior distribution and it is $p(\theta|x) = \N(\theta|M,L^{-1})$ for some $M$ and $L$.
+    What is the Bayes procedure (minimizing posterior expected loss)?
+
+    \vspace{1em}
+    (Your answer must be an explicit expression in terms of $a,b,c,M$, and $L$. You must show your work to receive full credit.)
+
+    \vspace{1em} \hrule
+    The Bayes procedure is the decision procedure (method of choosing $\hat\theta$ based on $x$) that minimizes the posterior expected loss,
+    \begin{align*}
+        \rho(\hat\theta,x) &= \E\big(\ell(\btheta,\hat\theta)\,\big\vert\, x\big) \\
+                           &= \E\big(a\btheta^2 + b\btheta\hat\theta + c\hat\theta^2\,\big\vert\, x\big) \\
+                           &= a\E(\btheta^2|x) + b\E(\btheta|x)\hat\theta + c\hat\theta^2. \\
+    \end{align*}
+    Since $c>0$, this is a strictly convex quadratic function of $\hat\theta$, so we can set the
+    derivative equal to zero and solve to find the minimum:
+    \begin{align*}
+        0 &= \frac{d}{d\hat\theta}\rho(\hat\theta,x) = b\E(\btheta|x) + 2 c\hat\theta \\
+        \hat\theta &= -b\E(\btheta|x)/(2c).
+    \end{align*}
+    Since the posterior is Normal with mean $M$, then $\E(\btheta|x) = M$, hence the Bayes procedure is
+
+    \begin{center}
+    \circled{$\ds\hat\theta = \frac{-b M}{2c}.$}
+    \end{center}
+
+
+
+
+% \newpage
+% \item (14 points) (Monte Carlo and Importance sampling)\\
+% Suppose $h(x) = x^2$.  Find the limit of each of the following expressions, as $N \to \infty$.
+% Each answer must be a specific numerical value (not just a formula), and you must show your work to receive full credit.
+    % \begin{enumerate}
+        % \setlength\itemsep{11em}
+        % \item (5 points) $\displaystyle\frac{1}{N}\sum_{i=1}^N h(X_i)$ where $X_1,X_2,\ldots\iid\Uniform(0,1)$.
+        % \item (5 points) $\displaystyle\frac{1}{N}\sum_{i=1}^N h(\Phi(Z_i))$ where $Z_1,Z_2,\ldots\iid\N(0,1)$
+            % and $\Phi(z)$ is the $\N(0,1)$ c.d.f.
+        % \item (4 points) $\displaystyle\frac{1}{N}\sum_{i=1}^N \frac{h(Z_i)}{\varphi(Z_i)}\I(0<Z_i<1)$ where $Z_1,Z_2,\ldots\iid\N(0,1)$
+            % and $\varphi(z)$ is the $\N(0,1)$ p.d.f.
+    % \end{enumerate}
+
+    
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+

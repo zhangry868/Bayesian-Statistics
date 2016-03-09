@@ -1,0 +1,145 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\input{../julia-listings}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Chapter 3: Solutions to Exercises}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{firststyle}
+
+\subsection*{Exercise 1}
+
+For $\theta\in\Theta =(0,1)$, the $\Bernoulli(\theta)$ p.m.f.\ is
+\begin{align*}
+p(x|\theta) & =\theta^x(1-\theta)^{1-x}\I(x\in\{0,1\}) \\
+&=(1-\theta)\big(\theta/(1-\theta)\big)^x\I(x\in\{0,1\})\\
+& =\exp\Big(x\log\big(\theta/(1-\theta)\big) +\log(1-\theta)\Big)\I(x\in\{0,1\})\\
+& =\exp\big(\varphi(\theta) t(x)-\kappa(\theta)\big)h(x)
+\end{align*}
+with
+\begin{align*}
+t(x) &= x \\
+\varphi(\theta) & =\log\big(\theta/(1-\theta)\big) \\
+\kappa(\theta) & = -\log(1-\theta) \\
+h(x) &= \I(x\in\{0,1\}).
+\end{align*}
+
+
+\subsection*{Exercise 2}
+
+For $\theta\in\Theta =(0,1)$, the $\Binomial(n,\theta)$ p.m.f.\ is
+\begin{align*}
+p(x|\theta) & ={n \choose x}\theta^x(1-\theta)^{n-x}\I(x\in S)\\
+& =\exp\Big(x\log\big(\theta/(1-\theta)\big) +n\log(1-\theta)\Big){n\choose x}\I(x\in S)\\
+& =\exp\big(\varphi(\theta) t(x)-\kappa(\theta)\big)h(x)
+\end{align*}
+where $S =\{0,1,\dotsc,n\}$, with
+\begin{align*}
+t(x) &= x \\
+\varphi(\theta) & =\log\big(\theta/(1-\theta)\big) \\
+\kappa(\theta) & = -n\log(1-\theta) \\
+h(x) &= {n\choose x}\I(x\in S).
+\end{align*}
+
+
+\subsection*{Exercise 3}
+
+Fix $a>0$. For $b>0$ and $x>0$, the Gamma p.d.f.\ is
+\begin{align*}
+\Ga(x|a,b)&=\frac{b^a}{\Gamma(a)} x^{a-1} e^{-b x}\underset{b}{\propto} b^a e^{-b x}.
+\end{align*}
+The form of this as a function of $b$ suggests that a Gamma prior would be conjugate. If we try choosing $p(b) =\Ga(b|\alpha,\beta)$, the resulting posterior on $b$ is
+\begin{align*}
+p(b|x_{1:n}) &\underset{b}{\propto} p(x_{1:n}|b) p(b)\\
+& =\Big(\frac{b^a}{\Gamma(a)}\Big)^n(x_1 \cdots x_n)^{a-1}e^{-b\sum x_i}
+ \frac{\beta^\alpha}{\Gamma(\alpha)} b^{\alpha-1}e^{-\beta b}\I(b>0)\\
+& \underset{b}{\propto} b^{\alpha + n a-1}\exp\big(-(\beta+\textstyle\sum x_i) b\big)\I(b>0)\\
+& \propto \Ga\big(b\mid \alpha + n a,\,\beta +\textstyle\sum x_i\big)
+\end{align*}
+for $x_1,\dotsc,x_n>0$. Since $\alpha + n a>0$ and $\beta+\textstyle\sum x_i>0$, this confirms that the Gamma distribution is a conjugate prior family for $b$ (with $a$ fixed).
+
+
+\subsection*{Exercise 4}
+
+For $a,b>0$,
+\begin{align*}
+\Ga(x|a,b)&=\frac{b^a}{\Gamma(a)} x^{a-1} e^{-b x}\I(x>0)\\
+& = \exp\Big(a\log x-b x +\log\frac{b^a}{\Gamma(a)}\Big) x^{- 1}\I(x>0)\\
+& =\exp\big(\theta^\T t(x)-\kappa(\theta)\big)h(x)
+\end{align*}
+with
+\begin{align*}
+\theta = \begin{pmatrix} a \\ b\end{pmatrix}\quad
+t(x) = \begin{pmatrix}\log x \\ -x\end{pmatrix}\quad
+h(x) = x^{-1}\I(x>0).
+\end{align*}
+
+
+\subsection*{Exercise 5}
+
+Consider a one-parameter exponential family indexed by $\theta\in\Theta$, with p.d.f./p.m.f.
+$$ p(x|\theta) =\exp\big(\varphi(\theta) t(x)-\kappa(\theta)\big) h(x) $$
+and consider the prior with p.d.f.
+$$ p_{n_0,t_0}(\theta)\propto \exp\big(n_0 t_0 \varphi(\theta)-n_0\kappa(\theta)\big)\I(\theta\in\Theta). $$
+Then the likelihood is
+$$ p(x_{1:n}|\theta) =\exp\Big(\varphi(\theta)\sum_{i = 1}^n t(x_i)-n\kappa(\theta)\Big) h(x_1)\cdots h(x_n)$$
+and the resulting posterior is
+\begin{align*}
+p(\theta|x_{1:n})&\propto p(x_{1:n}|\theta) p_{n_0,t_0}(\theta)\\
+&\propto \exp\Big(\big(n_0 t_0 +\textstyle\sum t(x_i)\big)\varphi(\theta)-(n_0+ n)\kappa(\theta)\Big)\I(\theta\in\Theta)\\
+& =\exp\big(n' t'\varphi(\theta)-n'\kappa(\theta)\big)\I(\theta\in\Theta)\\
+&\propto p_{n',t'}(\theta)
+\end{align*}
+where $n'= n_0 + n$ and $t'=\big(n_0 t_0+\sum t(x_i)\big)/(n_0+ n)$.
+
+
+\subsection*{Exercise 6}
+
+For $\alpha\in H$, define the p.d.f.
+$$\pi_\alpha(\theta) = \frac{p_\alpha(\theta) g(\theta)}{z(\alpha)}. $$
+Consider data $x_1,\dotsc,x_n$. Since $\{p_\alpha:\alpha\in H\}$ is a conjugate prior family, then  for any $\alpha\in H$, there is an $\alpha'\in H$ such that $p(x_{1:n}|\theta) p_\alpha(\theta)\propto p_{\alpha'}(\theta)$.
+Thus, using $\pi_\alpha(\theta)$ as the prior results in the posterior
+\begin{align*}
+p(\theta| x_{1:n}) &\propto p(x_{1:n}|\theta)\pi_\alpha(\theta)\\
+& = p(x_{1:n}|\theta)p_\alpha(\theta) \frac{g(\theta)}{z(\alpha)}\\
+&\propto p_{\alpha'}(\theta) \frac{g(\theta)}{z(\alpha)}\\
+&\propto p_{\alpha'}(\theta) \frac{g(\theta)}{z(\alpha')}\\
+&= \pi_{\alpha'}(\theta).
+\end{align*}
+Therefore, $\{\pi_\alpha:\alpha\in H\}$ is a conjugate prior family.
+
+
+\subsection*{Exercise 7}
+
+Suppose the prior p.d.f.\ is
+$$p(\theta) =\sum_{i = 1}^k \pi_i p_{\alpha_i}(\theta) $$
+for some $\alpha_1,\dotsc,\alpha_k\in H$, $\pi\in\Delta_k$.
+Consider data $x_1,\dotsc,x_n$. Conjugacy of $\{ p_\alpha:\alpha\in H\}$ implies that for each $i=1,\dotsc,k$, there is some $\alpha_i'\in H$ and some $c_i > 0$ such that
+$$ p(x_{1:n}|\theta) p_{\alpha_i}(\theta) = c_i p_{\alpha_i'}(\theta) $$
+for all $\theta\in\Theta$.
+Therefore, the posterior is
+\begin{align*}
+p(\theta|x_{1:n})&\propto p(x_{1:n}|\theta) p(\theta)\\
+& = p(x_{1:n}|\theta)\sum_{i = 1}^k \pi_i p_{\alpha_i}(\theta)\\
+& = \sum_{i = 1}^k \pi_i p(x_{1:n}|\theta) p_{\alpha_i}(\theta)\\
+& =\sum_{i = 1}^k \pi_i c_i \,p_{\alpha_i'}(\theta)\\
+&\propto \sum_{i = 1}^k \pi_i' p_{\alpha_i'}(\theta)
+\end{align*}
+where
+$$\pi_i'=\frac{\pi_i c_i}{\sum_{j = 1}^k \pi_j c_j}. $$
+
+
+
+\end{document}
+
+
+
+
+
+

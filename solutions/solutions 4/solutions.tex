@@ -1,0 +1,152 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\input{../julia-listings}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Chapter 4: Solutions to Exercises}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{firststyle}
+
+\subsection*{Exercise 1}
+Because $X_{n+1}\perp X_{1:n}\mid \theta$, we can sample from $X_{n+1}|x_{1:n}$ as follows:
+\begin{enumerate}
+    \item sample $\theta\sim p(\theta|x_{1:n})$, and then
+    \item sample $x_{n+1}\sim p(x_{n+1}|\theta)$.
+\end{enumerate}
+Since $p(x_{n+1}|\theta) = \N(x_{n+1}|\theta,\lambda^{-1})$, 
+step 2 is equivalent to setting $x_{n+1} = \theta + z$, where $z$ is sampled from $\N(0,\lambda^{-1})$, independently.
+Thus, the distribution of $X_{n+1}|x_{1:n}$ is the same as the distribution of $\tilde\btheta + Z$, where
+\begin{align*}
+    & \tilde\btheta\sim p(\theta|x_{1:n})\\
+    & Z\sim\N(0,\lambda^{-1})
+\end{align*}
+independently. Since we know $p(\theta|x_{1:n})=\N(\theta|M,L^{-1})$, where $L = \lambda_0 + n\lambda$ and 
+$$M =\frac{\lambda_0\mu_0+\lambda\sum_{i = 1}^n x_i}{\lambda_0+ n\lambda},$$
+then by the formula for the sum of independent Normals, we have that
+$$ \tilde\btheta + Z \sim \N(M,\,L^{-1}+\lambda^{-1}).$$
+Hence, 
+$$ p(x_{n+1}|x_{1:n}) = \N(x_{n+1}\mid M,\,L^{-1}+\lambda^{-1}).$$
+
+
+\subsection*{Exercise 2}
+
+Yum!
+
+\subsection*{Exercise 3}
+In some ways, an i.i.d.\ Normal model is appropriate, but in other ways, it is lacking---specifically, the Normal assumption is probably justified, but the i.i.d.\ assumption may not be.  We could reasonably expect the distribution for any given year to be approximately Normally distributed, because annual snowfall represents the sum of the snowfall over many days, and even though there is dependence between the snowfall in successive days, the amount of dependence probably decays quickly enough that the central limit theorem takes effect.  (Note: Technically, it cannot be exactly Normal, since snowfall cannot take negative values---however, when the mean is relatively large compared to the standard deviation, the probability of negative values is exceedingly small.) One possible issue with the i.i.d.\ assumption is that there may be changes in climate over time, causing the amount of snow to increase or decrease (violating the identically distributed assumption). Another possible issue is that there may be dependence between successive years (violating the independence assumption).
+
+
+\subsection*{Exercise 4}
+Based on my prior knowledge before looking at the data, my subjective prior was:
+\begin{itemize}
+\item $m = 200$ inches (I thought the mean snowfall for each city would be around 15--18 feet)
+\item $c = 1$ (I was not certain about this choice of $m$, so I gave it a weight of 1 prior ``sample'')
+\item $a = 1/2$ (I was uncertain about the precision, so I chose a weight of 1 prior ``sample'')
+\item $b = 80^2 a$ (I thought the standard deviation of the annual snowfall would be around 80 inches)
+\end{itemize}
+I visualized this prior by making a scatterplot of samples from it, see Figure \ref{figure:snow-prior}. The y-axis is in terms of the standard deviation $\lambda^{-1/2}$, since this is more interpretable than precision. Note that this prior puts non-negligible mass on negative values of the mean snowfall, which is not particularly realistic---it might be better to truncate the prior to make all of the values positive, however, this would probably make very little difference to the posterior. 
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{code/snow-prior-1.png}
+    % Source: Original work by J. W. Miller.
+  \end{center}
+  \caption{Scatterplot of samples from the prior for the snowfall exercise.}
+  \label{figure:snow-prior}
+\end{figure}
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{code/snow-histogram-1.png}
+    % Source: Original work by J. W. Miller.
+  \end{center}
+  \caption{Histograms of the annual snowfall for Aomori and Valdez.}
+  \label{figure:snow-histogram}
+\end{figure}
+
+
+Now, let's visualize the data in a histogram. See Figure \ref{figure:snow-histogram}. From visual inspection, it looks like Valdez has a slight edge---let's see what the posterior says. Using my prior, the posterior parameters are:
+\begin{align*}
+\text{for Aomori:} & \\
+    M & = 285.5\\
+    C & = 62\\
+    A & = 31\\ 
+    B &= 204034\\
+\text{for Valdez:} & \\
+    M & = 322.2\\
+    C & = 39\\
+    A & = 19.5\\
+    B &= 115204
+\end{align*}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{code/snow-posteriors-1.png}
+    % Source: Original work by J. W. Miller.
+  \end{center}
+  \caption{Scatterplot of samples from the posteriors for Aomori and Valdez.}
+  \label{figure:snow-posteriors}
+\end{figure}
+
+See Figure \ref{figure:snow-posteriors} for a scatterplot of samples from each of the posteriors. Visually, the posterior does indeed seem to favor Valdez as having higher mean snowfall. Using $10^6$ samples from each posterior, I approximate the posterior probability that Valdez has higher mean snowfall than Aomori to be:
+$$\Pr(\bm\mu_V > \bm\mu_A\mid x_{1:n_A},y_{1:n_V}) \approx 0.987$$
+where $x_{1:n_A}$ is the Aomori data and $y_{1:n_V}$ is the Valdez data.
+
+
+
+\subsection*{Exercise 5}
+
+I tried the following three different settings of hyperparameters, varying $m$, $b$, and $a$ separately:
+\begin{align*}
+ & m=500,c=1,a=1/2,b=80^2 a\\
+ & m=200,c=1,a=1/2,b=20^2 a\\
+ & m=200,c=1,a=10/2,b=80^2 a
+\end{align*}
+This gave the following three values for the posterior probability that Valdez has higher mean snowfall than Aomori:
+\begin{align*}
+0.989 \\
+0.987 \\
+0.987 
+\end{align*}
+This suggests that the result does not depend that strongly on the choice of prior.  (A more in-depth sensitivity analysis would be needed to verify this.) See Figure \ref{figure:snow-posteriors-alt}.
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=1\textwidth]{code/snow-posteriors-2.png}
+    \includegraphics[width=1\textwidth]{code/snow-posteriors-3.png}
+    \includegraphics[width=1\textwidth]{code/snow-posteriors-4.png}
+    % Source: Original work by J. W. Miller.
+  \end{center}
+  \caption{Scatterplots of samples from the posteriors for Aomori and Valdez, for the three different choices of hyperparameters.}
+  \label{figure:snow-posteriors-alt}
+\end{figure}
+
+There is enough data that we would have make the prior extremely different in order to get a significantly different result.
+This can be quantified more precisely by looking at how the posterior parameters $M, C, A, B$ depend on $m,c,a,b$, the sample size, and the summary statistics of the data.
+
+
+\newpage
+\appendix
+\section{Source code in Julia language}
+
+\subsection*{Exercise 2}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen}]{code/snow-solution.jl}
+
+
+
+\end{document}
+
+
+
+
+
+

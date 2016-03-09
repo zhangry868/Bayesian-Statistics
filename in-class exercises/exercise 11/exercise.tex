@@ -1,0 +1,71 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{In-class exercise}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\subsection*{Instructions}
+\begin{itemize}
+\item \textbf{Don't look at the solution yet!} This is for your benefit.
+\item This exercise must be submitted within 48 hours of the lecture in which it was given. 
+\item As long as you do the exercise on time, you get full credit---your performance does not matter.
+\item Without looking at the solution, take 5 minutes to try to solve the exercise.
+\item Pre-assessment: Write down how correct you think your answer is, from 0 to 100\%.
+\item Post-assessment: Now, study the solution and give yourself a ``grade'' from 0 to 100\%.
+\item Submit your work on the course website, including the pre- and post- assessments.
+\end{itemize}
+
+\subsection*{Exercise}
+Consider the following model:
+\begin{align*}
+    & \beta \sim \N(\mu_0,\sigma_0^2) \\
+    & \sigma^2 \sim \InvGamma(a,b) \\
+    & X_1,\ldots,X_n\iid \N(0,1) \\
+    & Y_i|\beta,\sigma^2,x_{1:n}\,\sim\,\N(\beta x_i,\sigma^2) \text{ independently for } i=1,\ldots,n.
+\end{align*}
+\begin{enumerate}
+    \item Draw the (natural) directed graphical model.
+    \item Draw the corresponding moral graph.
+    \item 
+    \begin{enumerate}
+        \item Are $\beta$ and $\sigma^2$ independent?
+        \item Are $\beta$ and $\sigma^2$ independent given $X_{1:n}$ and $Y_{1:n}$?
+        \item Are $Y_1$ and $Y_2$ independent?
+        \item Are $Y_1$ and $Y_2$ independent given $\beta$ and $\sigma^2$?
+    \end{enumerate}
+\end{enumerate}
+
+
+\newpage
+\vfill
+\rotatebox{180}{
+\begin{minipage}[t][\textheight][t]{\textwidth}
+\subsection*{Solution}\scriptsize
+\includegraphics[width=0.8\textwidth]{diagrams.pdf}
+\begin{enumerate}\addtocounter{enumi}{2}
+\item It is important to note that the graphical model can tell you that two variables are conditionally independent, 
+but cannot tell you that they are not conditional independent (i.e., it cannot tell you that they are conditionally dependent).
+\begin{enumerate}
+    \item Yes, by construction. (Write down the joint pdf to convince yourself.)
+    \item No, since, for example, $p(\beta|\sigma^2,x_{1:n},y_{1:n})$ depends on $\sigma^2$. (Derive this conditional distribution to convince yourself.)
+    \item No, since, for example, the posterior predictive $p(y_2|y_1)$ depends on $y_1$. (We can tell that this will be the case since knowledge of $y_1$ gives us information about $\sigma^2$ --- e.g., a large value of $y_1$ indicates a large $\sigma$ --- which, in turn, gives us information about $y_2$.)
+    \item Yes. In the moral graph, every path from $Y_1$ to $Y_2$ passes through $\beta$ or $\sigma^2$.
+\end{enumerate}
+\end{enumerate}
+\end{minipage}}
+
+\end{document}
+
+
+
+
+
+

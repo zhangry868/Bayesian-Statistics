@@ -1,0 +1,44 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Homework 9}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+The full chapter 8 from Bishop's book has now been posted under Lessons.
+Note: DGM means ``directed graphical model''.
+A directed graphical model must always use a directed *acyclic* graph.
+
+\begin{enumerate}
+    \item Bishop exercise 8.1. Note: By ``correctly normalized'', he means that it sums (or integrates) to 1.
+    \item Bishop exercise 8.8.
+    %\item Consider a distribution on $X,Y,Z$ that factors as $p(x,y,z) = p(x|z)p(y|z)p(z)$. 
+    %\begin{enumerate}
+        %\item Draw two different DGMs that are both respected by this distribution, one with two links and one with three links. Justify your answer.
+        %\item Draw the moral graphs for your DGMs. Are $X$ and $Y$ conditionally independent given $Z$? Can you determine this from either of the moral graphs?
+    %\end{enumerate}
+    \item Give an example of a DGM on four variables $W,X,Y,Z$ that is respected by any distribution on $W,X,Y,Z$. In other words, no matter what the joint distribution of $W,X,Y,Z$ is, it will factor in accordance with your graph. Justify your answer.
+    \item Give an example of a DGM on four variables $W,X,Y,Z$ such that $X\perp Y\mid W$, and this property can be determined from the DGM, but cannot be determined from the moral graph. Justify your answer.
+    \item Consider the model from Lab 7.
+    \begin{enumerate}
+        \item Draw the natural DGM for this model. (Here, by natural, I mean the one resulting from the factorization corresponding to the way the model is specified.) Do not include the $\epsilon$'s in your DGM. Represent the $Y$'s as normal given the $\beta$'s and $\tau$ (and the $x$'s).
+        \item Draw the resulting moral graph.
+        \item Using the moral graph, show that $(\mu_0,\tau_0)$ is conditionally independent of everything else given $\beta_{01},\ldots,\beta_{0n}$.
+        \item Using the moral graph, show that the observations $Y$ for patient 1 are conditionally independent of those for patient 2 given $\mu_0,\tau_0,\mu_1,\tau_1,$ and $\tau$.
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
+
+
+
+
+
+

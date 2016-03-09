@@ -1,0 +1,176 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\input{../julia-listings}
+\graphicspath{{code/}}
+\def\showcommentary{1}
+
+
+\title{Chapter 1: Solutions to Exercises}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{firststyle}
+
+\subsection*{Exercise 1}
+
+Assume $x_i>0$ for all $i$ (otherwise, the likelihood equals $0$ and the posterior is undefined).
+Since the data is independent given $\theta$, the likelihood factors and we get
+\begin{align*}
+p(x_{1:n}|\theta) & = \prod_{i = 1}^n p(x_i|\theta) \\
+& = \prod_{i = 1}^n \theta e^{-\theta x_i} \\
+& = \theta^n e^{-\theta\sum x_i}.
+\end{align*}
+Thus, using Bayes' theorem,
+\begin{align*}
+p(\theta|x_{1:n}) &\propto p(x_{1:n}|\theta) p(\theta) \\
+& \propto \theta^n e^{-\theta\sum x_i} \theta^{a-1} e^{-b\theta}\I(\theta>0) \\
+& = \theta^{a+n-1} e^{-(b+\sum x_i)\theta}\I(\theta>0)\\
+&\propto \Ga\big(\theta\mid a+n,\,b+\textstyle\sum x_i\big).
+\end{align*}
+Therefore, since the posterior density must integrate to $1$, we have
+$$p(\theta|x_{1:n}) =\Ga\big(\theta\mid a+n,\,b+\textstyle\sum x_i\big).$$
+
+
+\subsection*{Exercise 2}
+
+See Figure \ref{figure:posterior}. See Appendix for source code.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{homework.png}
+    % Source: Original work of J. W. Miller.
+  \end{center}
+  \caption{Prior and posterior densities.}
+  \label{figure:posterior}
+\end{figure}
+
+
+\subsection*{Exercise 3}
+
+A minimal requirement for using an Exponential model would be that the data is always positive-valued and continuous (not discrete). However, this is not enough to justify using this model. For any parametric model, it is important that the data can be ``well-fit'' for some choice of parameter values. (For the purposes of this homework, I wouldn't have expected you to know how to assess this yet---but you should learn it now.) Before seeing the data, this can be judged by knowing roughly how the data is generated (see below), and after seeing the data, by conducting tests such as goodness-of-fit or posterior predictive checks (which we will discuss later).
+
+The Exponential distribution has certain special properties (e.g., memorylessness, time between events in a Poisson process, characterization in terms of extreme value theory) that make it well-suited to certain applications. For instance, the ``memorylessness'' property is that if $X\sim\Exp(\theta)$, then for any $s,t\geq 0$,
+$$\Pr(X>s+t \mid X>s) = \Pr(X>t).$$
+The Poisson process connection is easier to think about (for me at least). If you can have something that is well-characterized by a Poisson process, then the inter-arrival times are i.i.d.\ Exponentials.
+In addition to the examples given in Lecture 1, another example would be the time between occurrences of a very rare disease caused by a genetic mutation, such as acromegaly (which often leads to ``gigantism'', see \url{http://en.wikipedia.org/wiki/Gigantism}), if we assume a constant overall birthrate over the period of time of observation.
+
+A simple example of something that would not be well-modeled by a Exponential distribution would be anything that could take negative values or is discrete---e.g., the amount of money you have minus what you owe, or the number of children in a family. An example of something positive-valued that would not be well-fit by an Exponential distribution is the distribution of heights of adult humans.
+
+
+
+\subsection*{Exercise 4}
+
+Since $\ell(s,a) =\I(s\neq a)$ then
+\begin{align*}
+\rho(a,x_{1:n}) & =\E(\ell(S,a)|x_{1:n})\\
+& =\E(\I(S\neq a)|x_{1:n})\\
+& =\Pr(S\neq a\mid x_{1:n})\\
+& =1 - \Pr(S = a\mid x_{1:n}).
+\end{align*}
+Thus,
+$$\argmin_a \rho(a,x_{1:n}) = \argmax_a \Pr(S = a\mid x_{1:n}),$$
+that is, the action $a$ that minimizes $\rho(a,x_{1:n})$ is the same as the action $a$ that maximizes the posterior probability $\Pr(S = a\mid x_{1:n})$.
+
+
+\subsection*{Exercise 5}
+
+Intuitively, the simplest thing that occurs to me is to look at the sample mean $\bar x =\frac{1}{n}\sum_{i = 1}^n x_i$ and see if it is greater than $1/2$. This leads to the decision rule:
+$$\delta_1(x_{1:n}) = \I(\bar x>\tfrac{1}{2}). $$
+
+Now, for the Bayes rule. Taking $S = X_{n+1}$ and $a=x_{n+1}$, from Exercise 4 we know that the Bayes procedure is to choose $x_{n+1}$ to maximize $\Pr(X_{n+1}=x_{n+1} \mid x_{1:n})$, i.e., to maximize the posterior predictive, which we know from Lecture 2 is
+$$p(x_{n+1}|x_{1:n}) = \frac{a_n^{x_{n+1}} b_n^{1-x_{n+1}}}{a_n + b_n}\I(x_{n+1}\in\{0,1\})$$
+where $a_n = a +\sum x_i$ and $b_n = b + n-\sum x_i$.
+This gives us the decision rule
+$$\delta_2(x_{1:n}) =\I(a_n>b_n),$$
+or, after rearranging terms,
+$$\delta_2(x_{1:n}) = \I\big(\bar x>\tfrac{1}{2} +\tfrac{b-a}{2 n}\big). $$
+
+
+\subsection*{Exercise 6}
+
+Yes, for my choice of $\delta_1$ in Exercise 5, they are the same when $a=b$.  Qualitatively speaking, the larger $a$ is relative to $b$, the more the ``balance'' is tilted towards favoring $x_{n+1}=1$ when using the Bayes procedure, compared to the intuitive procedure (and vice versa for $b$ larger than $a$). 
+
+When the difference between $a$ and $b$ is sizable (relative to $n$), the procedure pays less attention to the data and more attention to the prior.  On the other hand, as $n$ grows, the influence of the prior becomes less and less since $\tfrac{b-a}{2 n} \to 0$ as $n\to \infty$.
+
+(Note: A useful and common way of thinking about $a$ and $b$ is as ``pseudo-counts'', that is, as if we had observed $a$ ones and $b$ zeros before the experiment began.)
+
+\subsection*{Exercise 7}
+
+The mean of the Beta distribution $\Beta(a,b)$ is $a/(a+b)$. Thus, the prior mean is $\E(\btheta) = a/(a+b)$. From Lecture 1, the posterior is $\Beta(a_n,b_n)$ where $a_n = a +\sum x_i$ and $b_n = b + n-\sum x_i$. Hence, the posterior mean is 
+\begin{align*}
+\E(\btheta|x_{1:n}) &= \frac{a_n}{a_n + b_n} \\
+& = \frac{a + \sum x_i}{a + b + n} \\
+& = \frac{a + b}{a + b + n}\frac{a}{a+b} + \frac{n}{a+b+n}\frac{1}{n}\sum x_i \\
+& = (1-t) \E(\btheta) + t \bar x
+\end{align*}
+with $t = n/(a+b+n)$.
+
+\subsection*{Exercise 8}
+
+See Figure \ref{figure:rho}. See Appendix for source code.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{rho.png}
+    % Source: Original work by J. W. Miller.
+  \end{center}
+  \caption{Posterior expected loss for the disease prevalence example.}
+  \label{figure:rho}
+\end{figure}
+
+\subsection*{Exercise 9}
+
+A canonical example of this is in medical diagnosis.  Suppose $S$ indicates whether a
+certain patient has a certain type of cancer ($S=1$) or not ($S=0$).  A screening test is performed,
+yielding data $x$, and from this a decision is made as to whether the patient tests positive or not.  
+If a positive diagnosis is made but the patient does not have cancer (``false positive''),
+the patient will unnecessarily suffer emotional distress, physical discomfort from further testing,
+and monetary costs.
+On the other hand, if a negative diagnosis is made but the patient actually does have cancer
+(``false negative''), she or he could die prematurely. Due to the asymmetry in these consequences,
+the $0-1$ loss is typically not appropriate.  A better loss function would be as follows:
+\begin{center}
+\begin{tabular}{l r|c|c|}
+\multicolumn{2}{r}{} & \multicolumn{2}{c}{Diagnosis} \\
+\multicolumn{2}{r}{}
+ & \multicolumn{1}{c}{$0$}
+ & \multicolumn{1}{c}{$1$} \\
+\cline{3-4}
+\multirow{2}{*}{Truth} 
+   & $0$ & $0$ & $\alpha$ \\
+   \cline{3-4}
+   & $1$ & $\beta$ & $0$ \\
+   \cline{3-4}
+\end{tabular}
+\end{center}
+where $\alpha,\beta>0$ but $\alpha\neq\beta$.  
+(Note: This is purely hypothetical, and should not be construed as recommended practice.)
+
+
+
+
+
+
+
+
+
+\appendix
+\section{Source code in Julia language}
+
+\subsection*{Exercise 2}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen},firstline=11]{code/homework.jl}
+
+\subsection*{Exercise 8}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen},firstline=2]{code/rho-mod.jl}
+
+
+\end{document}
+
+
+
+
+
+

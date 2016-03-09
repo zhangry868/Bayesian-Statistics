@@ -1,0 +1,9 @@
+
+urbano-GPS-outliers.png
+Source: http://ase-research.org/basille/pubs/Urbano_2014b.pdf
+    Urbano, Ferdinando, Mathieu Basille, and Francesca Cagnacci. "Data Quality: Detection and Management of Outliers." Spatial Database for GPS Wildlife Tracking Data. Springer International Publishing, 2014. 115-137.
+License: Fair use in lecture notes is acceptable, but permission must be requested for publication.
+Date accessed: 1/31/2014
+
+
+All other images in this chapter are the original work of Jeffrey W. Miller.

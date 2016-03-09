@@ -1,0 +1,56 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Homework 11}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+For reference on the Markov Chain material, see mathematicalmonk ML 18.1--18.9.
+
+\begin{enumerate}
+    \item Make up an exercise on material from the second half of the course.  Upload your exercise and the solution to the folder entitled
+        ``Student-created exercises (Final)'' under Resources.
+    \item Consider a discrete distribution $p(u,v)$ on two variables $u$ and $v$. Show that the Gibbs move of sampling $u$ from $p(u|v)$ 
+        is a special case of a Metropolis--Hastings move with a particular proposal distribution.
+    \item For the following, consider only time-homogeneous Markov chains (MCs) on discrete spaces:
+    \begin{enumerate}
+        \item Give an example of a transition matrix that is not irreducible.
+        \item Give an example of a transition matrix that has more than one stationary distribution.
+        \item Give an example of a distribution $\pi$ and a transition matrix $T$ such that $\pi$ is a stationary distribution for $T$, but
+            $\pi$ and $T$ do not satisfy detailed balance.
+        \item Show that if a MC is irreducible and there is a state $b$ such that $T_{bb}>0$ (where $T$ is the transition matrix),
+            then the MC is aperiodic.
+    \end{enumerate}
+    \item Let $\pi^{(0)}=(1,0,0)$, and compute $\pi^{(t)} = \pi^{(t-1)} T$ for $t=1,\ldots,8$, where 
+        $$ T = \begin{pmatrix} .7 & .2 & .1 \\ .1 & .7 & .2 \\ .2 & .1 & .7 \end{pmatrix}. $$
+        (Report your results.) Find a distribution $\pi$ such that $\pi T = \pi$. (Hint: It's easier to guess and verify than solve the equations.)
+    \item Consider the following model:
+        \begin{align*}
+            & a \sim \Ga(r,s) \\
+            & b \sim \Ga(u,v) \\
+            & Y_1,\ldots,Y_n|a,b \,\iid\,\Ga(a,b).
+        \end{align*}
+        Derive a MH-within-Gibbs sampler for the posterior $p(a,b|y_{1:n})$, using a Gibbs move for $b$ and
+        a Metropolis--Hastings move for $a$. For the MH move for $a$, generate proposals as follows:
+        at iteration $i$, sample $X_i\sim\N(0,\sigma^2)$ 
+        and propose $a^* = a_i e^{X_i}$. To compute the acceptance ratio, you will need the density of this proposal distribution.  
+        To find it, use the formula for transformation of continuous random variables, namely, if $Y = g(X)$ then 
+        $$ p_Y(y) = p_X\big(g^{-1}(y)\big) \big\vert \tfrac{\partial}{\partial y} g^{-1}(y) \big\vert $$
+        (under regularity conditions on $g$) where $p_X$ and $p_Y$ are the densities of $X$ and $Y$ respectively.
+        You will find that the proposal distribution is a log-normal with parameters that depend on $a_i$ and $\sigma$.
+\end{enumerate}
+
+\end{document}
+
+
+
+
+
+

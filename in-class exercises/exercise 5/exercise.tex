@@ -1,0 +1,63 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{In-class exercise}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\subsection*{Instructions}
+\begin{itemize}
+\item \textbf{Don't look at the solution yet!} This is for your benefit.
+\item This exercise must be submitted within 48 hours of the lecture in which it was given. 
+\item As long as you do the exercise on time, you get full credit---your performance does not matter.
+\item Without looking at the solution, take 5 minutes to try to solve the exercise.
+\item Pre-assessment: Write down how correct you think your answer is, from 0 to 100\%.
+\item Post-assessment: Now, study the solution and give yourself a ``grade'' from 0 to 100\%.
+\item Submit your work on the course website, including the pre- and post- assessments.
+\end{itemize}
+
+\subsection*{Exercise}
+Show that if $p(\theta)$ and $q(\theta)$ are both p.d.f.s. and
+$$p(\theta)\propto q(\theta)$$
+then
+$$p(\theta) = q(\theta)$$
+for all $\theta$.
+
+
+
+\newpage
+\vfill
+\rotatebox{180}{
+\begin{minipage}[t][\textheight][t]{\textwidth}
+\subsection*{Solution}\scriptsize
+The general definition of proportionality is that two functions $f(x)$ and $g(x)$ are proportional if there exist constants $a,b$ which are not both equal to 0 (i.e., either $a$ is nonzero, or $b$ is nonzero, or both of them are nonzero) such that
+$$ a f(x) = b g(x)$$
+for all $x$. Applying this to the case of $p$ and $q$ above, there are some $a,b$, not both zero, such that
+\begin{align}\label{equation:equal}
+a p(\theta) = b q(\theta)
+\end{align}
+for all $\theta$, thus
+\begin{align*}
+a = a \int p(\theta) d\theta =  \int a p(\theta) d\theta  = \int b q(\theta) d\theta = b \int q(\theta) d\theta = b.
+\end{align*}
+Therefore, $a=b$, so both $a$ and $b$ are nonzero, and cancelling $a$ with $b$ in Equation \ref{equation:equal} shows that $p(\theta)=q(\theta)$ for all $\theta$.\\
+\vspace{2em}~\\
+Note: When we are dealing with p.d.f.s or p.m.f.s, both $a$ and $b$ must be nonzero, so the general definition is equivalent to: $f(x)$ and $g(x)$ are proportional if there exists $c$ such that
+$$ f(x) = c g(x) $$
+for all $x$.
+\end{minipage}}
+
+\end{document}
+
+
+
+
+
+

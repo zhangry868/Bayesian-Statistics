@@ -1,0 +1,56 @@
+\documentclass[11pt]{article} 
+\usepackage{amssymb,amsfonts,amsmath,latexsym,amsthm}
+\usepackage{dsfont}
+\newcommand{\T}{\mathtt{T}}
+\begin{document}
+
+\subsection*{Problem}
+
+Given $x_1,\ldots,x_n\in\mathds{R}^p$, consider the following linear regression model:
+$$ Y_i \sim N(\beta^\T x_i,\lambda^{-1}) $$
+independently for $i = 1,\ldots,n$, where $\beta\in\mathds{R}^p$ and $\lambda>0$.  (Here, $\beta^\T$ denotes the transpose of $\beta$.)
+\begin{enumerate}
+\item Define conditionally-conjugate (a.k.a. semi-conjugate) priors for $\beta$ and $\lambda$.
+\item Derive the full conditional distributions (of $\beta$ and $\lambda$) required for Gibbs sampling.
+\end{enumerate}
+
+
+
+\subsection*{Solution}
+
+1. Conditionally-conjugate priors: $\beta\sim N(\beta_0,\Sigma_0)$ and $\lambda\sim\mathrm{Gamma}(\nu_0/2,\nu_0\sigma_0^2/2)$ independently.
+
+\noindent 2. Full conditionals: First, letting $y = (y_1,\ldots,y_n)^\T$ and $A = \Big[x_1 \;\cdots\; x_n\Big]^\T$,
+$$ \sum_{i = 1}^n (y_i -\beta^\T x_i)^2 = (y - A \beta)^\T (y - A \beta) = y^\T y - 2 \beta^\T A^\T y + \beta^\T A^\T A \beta, $$
+thus,
+\begin{align*}
+p(\beta|y,x,\lambda)&\propto p(y|x,\beta,\lambda) p(\beta)\\
+&\propto\exp\big(-\tfrac{1}{2}\lambda{\textstyle\sum_{i = 1}^n} (y_i -\beta^\T x_i)^2\big)\exp\big(-\tfrac{1}{2}(\beta -\beta_0)^\T \Sigma_0^{-1}(\beta -\beta_0)\big)\\
+&\propto\exp\big(-\tfrac{1}{2}\lambda\beta^\T A^\T A \beta + \lambda\beta^\T A^\T y - \tfrac{1}{2}\beta^\T \Sigma_0^{-1}\beta +\beta^\T\Sigma_0^{-1}\beta_0\big)\\
+&=\exp\big(-\tfrac{1}{2}\beta^\T (\lambda A^\T A +\Sigma_0^{-1}) \beta + \beta^\T(\lambda A^\T y + \Sigma_0^{-1}\beta_0)\big)\\
+&\propto N(\beta\mid\mu_n,\Sigma_n)
+\end{align*}
+where
+\begin{align*}
+\Sigma_n &= (\lambda A^\T A +\Sigma_0^{-1})^{-1}\\
+\mu_n &= \Sigma_n (\lambda A^\T y +\Sigma_0^{-1}\beta_0).
+\end{align*}
+Defining $S(\beta) = \sum_{i = 1}^n (y_i -\beta^\T x_i)^2$, 
+\begin{align*}
+p(\lambda|y,x,\beta) &\propto p(y|x,\beta,\lambda) p(\lambda)\\
+&\propto \lambda^{n/2}\exp\big(-\tfrac{1}{2}\lambda \,S(\beta)\big) \lambda^{\nu_0/2-1}\exp(-\tfrac{1}{2}\nu_0\sigma_0^2\lambda)\\
+& =\lambda^{(n + \nu_0)/2-1}\exp\big( - (\tfrac{1}{2}S(\beta) + \tfrac{1}{2}\nu_0\sigma_0^2)\lambda\big)\\
+&\propto \mathrm{Gamma}\big(\tfrac{1}{2}(n + \nu_0),\, \tfrac{1}{2}S(\beta) + \tfrac{1}{2}\nu_0\sigma_0^2\big).
+\end{align*}
+
+
+
+
+
+\end{document}
+
+
+
+
+
+

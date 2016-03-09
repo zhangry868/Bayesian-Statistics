@@ -1,0 +1,31 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Hints for Problem 5}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+    \item Argue that 
+        $$\Pr(Z\in S) = \Pr(X_1\in S) + \Pr(X_1\not\in A,\,X_2\in S) + \Pr(X_1\not\in A,\,X_2\not\in A,\,X_3\in S) + \cdots.$$
+    \item Use the fact that $X,X_1,X_2,\ldots$ are i.i.d.
+    \item Let $a = \Pr(X\not\in A)$.
+    \item Use the fact that 
+        $$\sum_{k=0}^\infty a^k = \frac{1}{1-a}.$$
+\end{enumerate}
+
+
+\end{document}
+
+
+
+
+
+

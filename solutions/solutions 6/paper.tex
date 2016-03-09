@@ -1,0 +1,155 @@
+\documentclass[12pt]{article} 
+\input{../../custom}
+\input{../julia-listings}
+\graphicspath{{figures/}}
+\def\showcommentary{1}
+
+
+\title{Chapter 6: Solutions to Exercises}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{firststyle}
+
+
+\subsection*{Exercise 1}
+
+\subsubsection*{Part (a)}
+\begin{align*}
+    p(x|y) &\underset{x}{\propto} \I(|x-y|<c)\I(0<x<1)\\
+        &= \I(y-c<x<y+c)\I(0<x<1)\\
+        &= \I(\max\{0,y-c\}<x<\min\{1,y+c\})\\
+        &\underset{x}{\propto} \Uniform\big(x\mid \max\{0,y-c\},\,\min\{1,y+c\}\big).
+\end{align*}
+By symmetry,
+$$ p(y|x) = \Uniform\big(y\mid (\max\{0,x-c\},\,\min\{1,x+c\})\big). $$
+Hence, the Gibbs sampler (in the $(x,y)$ parametrization) is to initialize $x,y$ and then alternately sample:
+\begin{align*}
+     X|y\,\sim\,\Uniform(\max\{0,y-c\},\,\min\{1,y+c\}),\\
+     Y|x\,\sim\,\Uniform(\max\{0,x-c\},\,\min\{1,x+c\}).
+\end{align*}
+
+\subsubsection*{Part (b)}
+See code in Appendix.
+
+\subsubsection*{Part (c)}
+See Figure \ref{figure:box}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{1\textwidth}
+        \centering
+            \includegraphics[trim=0 0.4cm 0 0, clip, width=0.9\textwidth]{code/box-x_trace-c=0.25.png}
+            \includegraphics[trim=0 0.4cm 0 0, clip, width=0.9\textwidth]{code/box-x_trace-c=0.05.png}
+            \includegraphics[trim=0 0.4cm 0 0, clip, width=0.9\textwidth]{code/box-x_trace-c=0.02.png}
+        % Original work by Jeffrey W. Miller
+        \caption{Traceplots of $x$ for $c = 0.25$, $c = 0.05$, and $c = 0.02$.}
+    \end{subfigure}
+    \begin{subfigure}[t]{1\textwidth}
+        \centering
+            \includegraphics[trim=0.8cm 0.4cm 0.8cm 0, clip, width=0.325\textwidth]{code/box-scatter-c=0.25.png}
+            \includegraphics[trim=0.8cm 0.4cm 0.8cm 0, clip, width=0.325\textwidth]{code/box-scatter-c=0.05.png}
+            \includegraphics[trim=0.8cm 0.4cm 0.8cm 0, clip, width=0.325\textwidth]{code/box-scatter-c=0.02.png}
+        % Original work by Jeffrey W. Miller
+        \caption{Scatterplots of $(x,y)$ samples for $c = 0.25$, $c = 0.05$, and $c = 0.02$.}
+    \end{subfigure}
+    \vspace{.5em}
+    \caption{Results for Exercise 1.}
+    \label{figure:box}
+\end{figure}
+
+\subsubsection*{Part (d)}
+The issue is that when $c$ is small, the range of each variable is highly restricted, given the other variable. As a result, the sampler has
+to make many ``zig--zag'' moves in order to travel long distances (see Figure \ref{figure:box-short}). 
+This causes the correlation between successive samples to be high when $c$ is small, as we can see in the traceplots of $x$---the traceplot
+indicates that it takes a long time to see significant changes in the samples. This makes the performance of the sampler worse---it
+takes many more samples to achieve the same level of accuracy when making approximations based on these samples.
+
+\begin{figure}
+  \begin{center}
+      \includegraphics[width=0.48\textwidth]{code/box-walk-c=0.25.png}
+      \includegraphics[width=0.48\textwidth]{code/box-walk-c=0.05.png}
+      \includegraphics[width=0.48\textwidth]{code/box-walk-c=0.02.png}
+    % Source: Original work by J. W. Miller.
+  \end{center}
+    \caption{Path of the Gibbs sampler for first few $(x,y)$ samples, for $c = 0.25$, $c = 0.05$, and $c = 0.02$.}
+  \label{figure:box-short}
+\end{figure}
+
+
+\subsection*{Exercise 2}
+
+\subsubsection*{Part (a)}
+\begin{align*}
+    p(u|v) &\underset{u}{\propto} \I(|v|<u<1-|v|)
+    \underset{u}{\propto} \Uniform\big(u\,\big\vert\, |v|,1-|v|\big)\\
+    p(v|u) &\underset{v}{\propto} \I(|v|<c/2)\I(|v|<u<1-|v|) \\
+    &=\left\{
+        \begin{array}{ll}
+            -u<v<u & \text{if } u\leq c/2 \\
+            -c/2<v<c/2 & \text{if } c/2<u\leq 1-c/2 \\
+            u-1<v<1-u & \text{if } 1-c/2<u
+        \end{array}
+    \right.\\
+    &\propto\left\{
+        \begin{array}{ll}
+            \Uniform(v\mid -u,u) & \text{if } u\leq c/2 \\
+            \Uniform(v\mid -c/2,c/2) & \text{if } c/2<u\leq 1-c/2 \\
+            \Uniform(v\mid u-1,1-u) & \text{if } 1-c/2<u
+        \end{array}
+    \right.
+\end{align*}
+
+\subsubsection*{Part (b)}
+See code in Appendix.
+
+\subsubsection*{Part (c)}
+See Figure \ref{figure:box-transformed}.
+The reason why this works so much better is that $u$ can move long distances, given $v$ --- the strong coupling that was present between $x$
+and $y$ is not exhibited by $u$ and $v$. This significantly reduces the correlation between samples, and will result in far better
+approximation accuracy for the same number of samples.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{1\textwidth}
+        \centering
+            \includegraphics[trim=0 0.4cm 0 0, clip, width=0.9\textwidth]{code/box-x_trace-c=0.25-transformed.png}
+            \includegraphics[trim=0 0.4cm 0 0, clip, width=0.9\textwidth]{code/box-x_trace-c=0.05-transformed.png}
+            \includegraphics[trim=0 0.4cm 0 0, clip, width=0.9\textwidth]{code/box-x_trace-c=0.02-transformed.png}
+        % Original work by Jeffrey W. Miller
+        \caption{Traceplots of $x$ for $c = 0.25$, $c = 0.05$, and $c = 0.02$.}
+    \end{subfigure}
+    \begin{subfigure}[t]{1\textwidth}
+        \centering
+            \includegraphics[trim=0.8cm 0.4cm 0.8cm 0, clip, width=0.325\textwidth]{code/box-scatter-c=0.25-transformed.png}
+            \includegraphics[trim=0.8cm 0.4cm 0.8cm 0, clip, width=0.325\textwidth]{code/box-scatter-c=0.05-transformed.png}
+            \includegraphics[trim=0.8cm 0.4cm 0.8cm 0, clip, width=0.325\textwidth]{code/box-scatter-c=0.02-transformed.png}
+        % Original work by Jeffrey W. Miller
+        \caption{Scatterplots of $(x,y)$ samples for $c = 0.25$, $c = 0.05$, and $c = 0.02$.}
+    \end{subfigure}
+    \vspace{.5em}
+    \caption{Results for Exercise 2, using transformed Gibbs sampler.}
+    \label{figure:box-transformed}
+\end{figure}
+
+
+
+
+\appendix
+\section{Source code in Julia language}
+
+\subsection*{Exercises 1 and 2}
+\lstinputlisting[language=julia,numbers=none,commentstyle=\tt\color{OliveGreen},firstline=1]{code/box-solution.jl}
+
+
+
+\end{document}
+
+
+
+
+
+
