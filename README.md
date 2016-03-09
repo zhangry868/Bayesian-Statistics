@@ -21,7 +21,7 @@ Bayes’ theorem, Definitions & notation, Decision theory, Beta-Bernoulli model,
 What is Bayesian inference? Why use Bayes? A brief history of statistics
 
 ##### Exponential families and conjugate priors
-One-parameter exponential families, Natural/canonical form, Conjugate priors Multi-parameter exponential families, Motivations for using exponential families
+One-parameter exponential families, Natural/canonical form, Conjugate priors, Multi-parameter exponential families, Motivations for using exponential families
 
 ##### Univariate normal model
 Normal with conjugate Normal-Gamma prior, Sensitivity to outliers
